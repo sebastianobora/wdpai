@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    web:
+        build: 
+            context: . #skąd ma odczytać poniższą ścieżkę? (. to root projektu)
+            dockerfile: docker/nginx/Dockerfile #ścieżka do dockerfile
+        ports:
+            - "8080:80"
+        volumes:
+            - .:/app/
+        links: #które usługi powiążemy z naszą apką
+            - php
+    php:
+        build: 
+            context: .
+            dockerfile: docker/php/Dockerfile
+        volumes:
+            - .:/app/
