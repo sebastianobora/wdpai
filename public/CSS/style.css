@@ -1,0 +1,84 @@
+body{
+    margin: 0;
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    background: transparent linear-gradient(180deg, #F94848 0%, #FB6731 59%, #FC7A23 100%) 0% 0% no-repeat padding-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container{
+    height: 50%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    width: 25vw;
+
+    background: #F94848 0% 0% no-repeat padding-box;
+    box-shadow: 0px 6px 6px #00000029;
+    border-radius: 10px;
+}
+
+button {
+    background: #FC9700E6 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    
+    border: none;
+    width: 50%;
+    color: white;
+    margin: 1em;
+    line-height: 2.5em;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 1em;
+    margin: 1em;
+    width: 50%;
+    color: white;
+}
+
+::placeholder{
+    color: white;
+    border: none;
+}
+
+@media only screen and (max-device-width: 420px){
+    * {
+        font-size: 36px;
+    }
+    .login-container, .logo {
+        width: 100%;
+    }
+
+    form {
+        height: 35vh;
+        width: 80%;
+        margin: auto;
+    }
+
+    img {
+        width: 80%;
+        margin: auto;
+    }
+}
