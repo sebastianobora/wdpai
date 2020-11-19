@@ -19,11 +19,12 @@ body{
     align-items: center;
 }
 
+
 .login-container{
     height: 50%;
 }
 
-form {
+form.login {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,6 +33,7 @@ form {
     width: 25vw;
 
     background: #F94848 0% 0% no-repeat padding-box;
+    background-color: rgba(249, 72, 72, .32);
     box-shadow: 0px 6px 6px #00000029;
     border-radius: 10px;
 }
@@ -56,11 +58,13 @@ input {
     margin: 1em;
     width: 50%;
     color: white;
+    outline: none;
 }
 
 ::placeholder{
     color: white;
     border: none;
+    opacity: 0.75;
 }
 
 @media only screen and (max-device-width: 420px){
@@ -82,3 +86,136 @@ input {
         margin: auto;
     }
 }
+
+.base-container {
+    display: flex;
+    justify-content: flex-start;
+    height: 100vh;
+    background: transparent linear-gradient(180deg, #F94848 0%, #FB6731 59%, #FC7A23 100%) 0% 0% no-repeat padding-box;
+}
+
+
+nav {
+    width: 20vw;
+    height: 100%;
+    background-color: rgba(249, 72, 72, .32);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+nav > img {
+width: 80%;
+margin: 1em auto 2em auto;
+opacity: 95%;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    line-height: 3em;
+}
+
+li > i {
+    font-size: 1.5em;
+}
+
+.button {
+    border: 1px solid #FFFFFF;
+    opacity: 0.95;
+    border-radius: 0.8em;
+    margin-left: 1em;
+    text-align: center;
+    color: white;
+    padding: 0.2em;
+    width: 70%;
+}
+
+ul {
+    list-style-type: none;
+    color: white;
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0.72px;
+    color: #FFFFFF;
+    opacity: 0.95;
+    height: 100%;
+    width: calc(100% - 5em);
+    margin: auto;
+    padding: 0;
+}
+
+li {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+main {
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 2em 0em 2em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+    position: relative;
+}
+
+.add-your-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FD7B0F 0% 0% no-repeat padding-box;
+    box-shadow: 0px 6px 6px #00000029;
+    border-radius: 1em;
+    opacity: 0.90;
+
+    width: 20%;
+    height: 80%;
+
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0px;
+    color:white;
+}
+
+.add-your-type > i {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 0.5em;
+    opacity: 0.9;
+}
+
+.search-bar {
+    width: 35%;
+}
+
+.search-bar > form > input {
+    width: 100%;
+    height: 80%;
+    background: #FD7B0F 0% 0% no-repeat padding-box;
+    box-shadow: 0px 6px 6px #00000029;
+    opacity: 0.9;
+    border-radius: 1em;
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    border-bottom: none;
+    color: white;
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0px;
+}
+
+.fa, .fas {
+    width: 1em;
+}
+
+.avatar {
+    vertical-align: middle;
+    border-radius: 50%;
+    height: 90%;
+  }
