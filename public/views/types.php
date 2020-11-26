@@ -1,14 +1,14 @@
 <DOCTYPE html>
     <head>
-        <link rel="stylesheet" type="text/css" href="public/CSS/style.css">
-        <link rel="stylesheet" type="text/css" href="public/CSS/types.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/types.css">
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
-        <title>PROJECTS</title>
+        <title>TYPES</title>
     </head>
     <body>
         <div class="base-container">
             <nav>
-                <img src="public/img/logo.svg">
+                <img src="/public/img/logo.svg">
                 <ul>
                     <li>
                         <i class="fas fa-chess"></i>
@@ -60,17 +60,17 @@
                     </div>
 
                     <div class="avatar">
-                        <img src="public/img/avatar.svg" alt="Avatar" class="avatar">
+                        <img src="/public/img/avatar.svg" alt="Avatar" class="avatar">
                     </div>
 
                 </header>
 
                 <section class="types">
                     <div id="type-1">
-                        <img src="public/uploads/deszczu.jpg">
+                        <img src="/public/uploads/<?= $type->getImage() ?>">
                         <div>
-                            <h2>Title</h2>
-                            <p>description</p>
+                            <h2><?= $type->getTitle() ?></h2>
+                            <p><?= $type->getDescription() ?></p>
                             <div class="social-section">
 
                                 <div class="like">

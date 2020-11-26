@@ -4,7 +4,7 @@ body{
 .container {
     width: 100vw;
     height: 100vh;
-    background: transparent linear-gradient(180deg, #F94848 0%, #FB6731 59%, #FC7A23 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(180deg, #f94848 0%, #FB6731 59%, #FC7A23 100%) 0% 0% no-repeat padding-box;
 
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ button {
     line-height: 2.5em;
 }
 
-input {
+input, textarea {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid white;
