@@ -7,11 +7,5 @@ class DefaultController extends AppController{
         // TODO display login.php
         $this->render('login');
     }
-
-    public function types(){
-
-        $this->render('types');
-        // TODO display add-types.php
-    }
 }
 

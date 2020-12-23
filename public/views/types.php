@@ -66,6 +66,7 @@
                 </header>
 
                 <section class="types">
+                    <?php foreach($types as $type): ?>
                     <div id="type-1">
                         <img src="/public/uploads/<?= $type->getImage() ?>">
                         <div>
@@ -86,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-
+                <?php endforeach; ?>
                 </section>
 
             </main>

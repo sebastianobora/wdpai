@@ -2,6 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'/../models/Type.php';
+require_once __DIR__.'/../repository/TypeRepository.php';
 
 class TypeController extends AppController{
     const MAX_FILE_SIZE = 1024*1024;
@@ -9,8 +10,17 @@ class TypeController extends AppController{
     const UPLOAD_DIRECTORY = '/../public/uploads/';
 
     private $message = [];
+    private $typeRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->typeRepository = new TypeRepository();
+    }
+
 
     public function addType(){
+
         # file ustailiśmy w widoku name ='file'
         if($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])){
             move_uploaded_file(
@@ -19,8 +29,9 @@ class TypeController extends AppController{
             ); # łączymy w drugim argumencie ścieżkę do katalogu + ścieżka docelowa pliku + nzwa pliku
 
             $type = new Type($_POST['title'], $_POST['description'], $_FILES['file']['name']);
+            $this->typeRepository->addType($type);
 
-            return $this->render("types", ['messages' => $this->message, 'type' => $type]);
+            return $this->render("types", ['messages' => $this->message, 'types' => $this->typeRepository->getTypes()]);
         }
 
         return $this ->render("add-types", ['messages' => $this->message]);
@@ -37,5 +48,10 @@ class TypeController extends AppController{
         }
 
         return true;
+    }
+
+    public function types(){
+        $types = $this->typeRepository->getTypes();
+        $this->render('types', ['types' => $types]);
     }
 }
