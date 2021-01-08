@@ -36,9 +36,15 @@ class SecurityController extends AppController{
         }
 
         //return $this->render('types');
+        setcookie("user", $user->getId(), time() + (86400 * 30));
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("location: {$url}/types");
+    }
+
+    public function logout(){
+        setcookie("user", "", time() - 3600);
+        $this->render('login');
     }
 
     public function register(){

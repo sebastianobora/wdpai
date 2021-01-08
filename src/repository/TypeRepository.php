@@ -34,7 +34,7 @@ class TypeRepository extends Repository
         VALUES (?, ?, ?, ?, ?)');
 
         ## tutaj dorobić wyciągnięcie po ciasteczku pobieranie id osoby, która dodaje projekt
-        $tempId = 4;
+        $tempId = $_COOKIE['user'];
 
         $stmt->execute([
             $type->getTitle(),
@@ -61,7 +61,39 @@ class TypeRepository extends Repository
                 $type['image']
             );
         }
-
         return $result;
+    }
+
+    public function getTypeByCategory(string $categoryString): array
+    {
+        $result = [];
+        $stmt = $this->database->connect()->prepare('
+        SELECT * FROM types WHERE LOWER(category) LIKE :category');
+
+        $stmt->bindParam(':category', $categoryString, PDO::PARAM_STR);
+        $stmt-> execute();
+        $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($types as $type) {
+            $result[] = new Type(
+                $type['title'],
+                $type['description'],
+                $type['image']
+            );
+        }
+        return $result;
+    }
+
+    public function getTypeByTitle(string $searchString): array
+    {
+        $searchString = '%' . strtolower($searchString) . '%';
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM types WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
+        ');
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

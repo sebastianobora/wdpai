@@ -3,46 +3,48 @@
         <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
         <link rel="stylesheet" type="text/css" href="/public/CSS/types.css">
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="./public/js/button.js" defer></script>
+        <script type="text/javascript" src="./public/js/search.js" defer></script>
         <title>TYPES</title>
     </head>
     <body>
         <div class="base-container">
             <nav>
-                <img src="/public/img/logo.svg">
+                <img id="logo" src="/public/img/logo.svg">
                 <ul>
                     <li>
                         <i class="fas fa-chess"></i>
-                        <a href="#" class="button">Games</a>
+                        <a id="games" class="button">Games</a>
                     </li>
 
                     <li>
                         <i class="fas fa-music"></i>
-                        <a href="#" class="button">Music</a>
+                        <a id="music" class="button">Music</a>
                     </li>
 
                     <li>
                         <i class="far fa-play-circle"></i>
-                        <a href="#" class="button">Series</a>
+                        <a id="series" class="button">Series</a>
                     </li>
 
                     <li>
                         <i class="fas fa-film"></i>
-                        <a href="#" class="button">Movie</a>
+                        <a id="movie" class="button">Movie</a>
                     </li>
 
                     <li>
                         <i class="fas fa-book"></i>
-                        <a href="#" class="button">Book</a>
+                        <a id="book" class="button">Book</a>
                     </li>
 
                     <li>
                         <i class="fab fa-youtube-square"></i>
-                        <a href="#" class="button">Youtube</a>
+                        <a id="youtube" class="button">Youtube</a>
                     </li>
 
                     <li>
                         <i class="fab fa-instagram"></i>
-                        <a href="#" class="button">Instagram</a>
+                        <a id="instagram" class="button">Instagram</a>
                     </li>
                 </ul>
             </nav>
@@ -50,9 +52,7 @@
             <main>
                 <header>
                     <div class="search-bar">
-                        <form>
-                            <input placeholder="What are you looking for?">
-                        </form>
+                        <input placeholder="What are you looking for?">
                     </div>
 
                     <div class="add-your-type">
@@ -78,7 +78,6 @@
                         <textarea name="description" rows="5" placeholder="description"></textarea>
                         <input type="file" name="file">
                         <button type="submit">send</button>
-
                     </form>
 
                 </section>

@@ -215,7 +215,7 @@ header {
     width: 35%;
 }
 
-.search-bar > form > input {
+.search-bar > input {
     width: 100%;
     height: 80%;
     background: #FD7B0F 0% 0% no-repeat padding-box;

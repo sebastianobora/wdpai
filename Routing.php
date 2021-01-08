@@ -7,12 +7,12 @@ require_once 'src/controllers/TypeController.php';
 class Routing {
     public static $routes; # url oraz ścieżka kontrolera
 
-    public static function get($url, $controller){
-        self::$routes[$url] = $controller;
+    public static function get($url, $view){
+        self::$routes[$url] = $view;
     }
 
-    public static function post($url, $controller){
-        self::$routes[$url] = $controller;
+    public static function post($url, $view){
+        self::$routes[$url] = $view;
     }
 
     public static function run($url){
@@ -23,9 +23,22 @@ class Routing {
         }
 
         $controller = self::$routes[$action];
-        $object = new $controller; 
-        # tworzymy obiekt na podstawie stringa, tu będzie nazwa controllera
 
+        if(!isset($_COOKIE["user"]) and $action != 'login'){
+            $action = 'index';
+            $controller = 'DefaultController';
+        }
+
+        if($action == ''){
+            $action = 'index';
+        }
+
+        if(isset($_COOKIE["user"]) and ($action == 'login' or 'index')){
+            $action = 'types';
+            $controller = 'TypeController';
+        }
+
+        $object = new $controller;
         $object->$action();
     }
 

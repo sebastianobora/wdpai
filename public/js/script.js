@@ -33,5 +33,4 @@ function validatePassword(){
 }
 
 emailInput.addEventListener('keyup', validateEmail);
-
 confirmedPasswordInput.addEventListener('keyup', validatePassword);

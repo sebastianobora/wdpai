@@ -18,6 +18,67 @@ class TypeController extends AppController{
         $this->typeRepository = new TypeRepository();
     }
 
+    public function types(){
+        $types = $this->typeRepository->getTypes();
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function games(){
+        $types = $this->typeRepository->getTypeByCategory('games');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function music(){
+        $types = $this->typeRepository->getTypeByCategory('music');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function series(){
+        $types = $this->typeRepository->getTypeByCategory('series');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function movie(){
+        $types = $this->typeRepository->getTypeByCategory('movie');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function book(){
+        $types = $this->typeRepository->getTypeByCategory('book');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function youtube(){
+        $types = $this->typeRepository->getTypeByCategory('youtube');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function instagram(){
+        $types = $this->typeRepository->getTypeByCategory('instagram');
+        $this->render('types', ['types' => $types]);
+    }
+
+    public function category(){
+        if($this->isPost()){
+            $types = $this->typeRepository->getTypeByCategory($_POST['category']);
+            $this->render('types', ['types' => $types]);
+        }
+    }
+
+    public function search()
+    {
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+
+            echo json_encode($this->typeRepository->getTypeByTitle($decoded['search']));
+        }
+    }
 
     public function addType(){
 
@@ -48,10 +109,5 @@ class TypeController extends AppController{
         }
 
         return true;
-    }
-
-    public function types(){
-        $types = $this->typeRepository->getTypes();
-        $this->render('types', ['types' => $types]);
     }
 }
