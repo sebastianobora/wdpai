@@ -35,7 +35,9 @@ class TypeRepository extends Repository
 
         ## tutaj dorobić wyciągnięcie po ciasteczku pobieranie id osoby, która dodaje projekt
         //TODO: znaleźć usera po emailu i pobrać jego ID
-        $tempId = $_COOKIE['user'];
+        //$tempId = $_COOKIE['user'];
+        $tempId = 4;
+        //TODO: fetch user by cookie
 
         $stmt->execute([
             $type->getTitle(),

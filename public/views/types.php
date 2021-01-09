@@ -13,45 +13,9 @@
 
 <body>
     <div class="base-container">
-        <nav>
-            <img id="logo" src="/public/img/logo.svg">
-            <ul>
-                <li>
-                    <i class="fas fa-chess"></i>
-                    <a href="games" id="music" class="button">Games</a>
-                </li>
-
-                <li>
-                    <i class="fas fa-music"></i>
-                    <a href="music" id="music" class="button">Music</a>
-                </li>
-
-                <li>
-                    <i class="far fa-play-circle"></i>
-                    <a href="series" id="series" class="button">Series</a>
-                </li>
-
-                <li>
-                    <i class="fas fa-film"></i>
-                    <a href="movie" id="movie" class="button">Movie</a>
-                </li>
-
-                <li>
-                    <i class="fas fa-book"></i>
-                    <a href="book" id="book" class="button">Book</a>
-                </li>
-
-                <li>
-                    <i class="fab fa-youtube-square"></i>
-                    <a href="youtube" id="youtube" class="button">Youtube</a>
-                </li>
-
-                <li>
-                    <i class="fab fa-instagram"></i>
-                    <a href="instagram" id="instagram" class="button">Instagram</a>
-                </li>
-            </ul>
-        </nav>
+        <?php
+            require_once 'side-bar.php';
+        ?>
 
         <main>
             <header>
@@ -66,18 +30,16 @@
                 <div class="avatar">
                     <img src="/public/uploads/<?= $avatar; ?>" alt="Avatar" class="avatar">
                 </div>
-
             </header>
 
-            <section class="types">
-                <?php foreach($types as $type): ?>
-                <div id="type-1">
-                    <img src="/public/uploads/<?= $type->getImage() ?>">
-                    <div>
+            <section class="js-types types-wrapper types">
+                <?php foreach($types as $index => $type): ?>
+                <div class="type-wrapper" id="type-<?= $index ?>">
+                    <img class="type-image" src="/public/uploads/<?= $type->getImage() ?>">
+                    <div class="type-content">
                         <h2><?= $type->getTitle() ?></h2>
                         <p><?= $type->getDescription() ?></p>
-                        <div class="social-section">
-
+                        <div class="type-social">
                             <div class="like">
                                 <i class="fas fa-heart"></i>
                                 <span>600</span>

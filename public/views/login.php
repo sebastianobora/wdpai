@@ -1,15 +1,19 @@
 <DOCTYPE html>
     <head>
         <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/authentication.css">
+
         <title>LOGIN PAGE</title>
     </head>
     <body>
-        <div class="container">
-            <div class="logo">
-                <img src="/public/img/logo.svg">
+        <div class="auth-container">
+            <div class="auth-logo-container">
+                <a href="login">
+                    <img src="public/img/logo.svg">
+                </a>
             </div>
             <div class="login-container">
-                <form class="login" action="login" method="post">
+                <form class="auth-form" action="login" method="post">
                     <div class="message">
                         <?php if(isset($messages)){
                             foreach ($messages as $message) {
@@ -18,9 +22,10 @@
                         }
                         ?>
                     </div>
-                    <input name="email" type="text" placeholder="email@email.com">
-                    <input name="password" type="password" placeholder="password">
+                    <input class="form-input" name="email" type="text" placeholder="email@email.com">
+                    <input class="form-input" name="password" type="password" placeholder="password">
                     <button type="submit">LOGIN</button>
+                    <a href="register">Register</a>
                 </form>
             </div>
         </div>

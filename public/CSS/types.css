@@ -1,4 +1,4 @@
-section {
+.types-wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2em;
@@ -6,14 +6,14 @@ section {
     overflow: auto;
 }
 
-.types > div > img {
-height: 50%;
-width: 100%;
-object-fit: cover;
-border-radius: 1em 1em 0 0;
+.type-image {
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1em 1em 0 0;
 }
 
-.types > div > div {
+.type-content {
     height: 50%;
     color: #474747;
     padding: 1em;
@@ -24,26 +24,15 @@ border-radius: 1em 1em 0 0;
     flex-wrap: wrap;
 }
 
-.social-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.types > div {
+.type-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 40vh;
 }
 
-section.type-form {
+.type-social {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.type-form > form {
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }

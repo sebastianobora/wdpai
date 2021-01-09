@@ -1,5 +1,5 @@
 const searchBar = document.querySelector('input[placeholder="What are you looking for?"]');
-const typeContainer = document.querySelector(".types");
+const typeContainer = document.querySelector(".js-types");
 
 searchBar.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
@@ -48,5 +48,6 @@ function createType(type) {
     like.innerText = type.like;
     const rate = clone.querySelector(".like>span");
     rate.innerText = type.rate;
+
     typeContainer.appendChild(clone);
 }

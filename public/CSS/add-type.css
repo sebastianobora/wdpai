@@ -1,0 +1,10 @@
+section.type-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.type-form > form {
+    display: flex;
+    flex-direction: column;
+}

@@ -24,16 +24,16 @@ class Routing {
 
         $controller = self::$routes[$action];
 
-        if(!isset($_COOKIE["user"]) and $action != 'login'){
-            $action = 'index';
-            $controller = 'DefaultController';
+        if(!isset($_COOKIE["user"]) and $action != 'login' and $action != 'register'){
+                $action = 'index';
+                $controller = 'DefaultController';
         }
 
         if($action == ''){
             $action = 'index';
         }
 
-        if(isset($_COOKIE["user"]) and ($action == 'login' or $action == 'index')){
+        if(isset($_COOKIE["user"]) and ($action == 'login' or $action == 'index' or $action == 'register')){
             $action = 'types';
             $controller = 'TypeController';
         }
@@ -41,7 +41,6 @@ class Routing {
         $object = new $controller;
         $object->$action();
     }
-
 }
 
 ?>

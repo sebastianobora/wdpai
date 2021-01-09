@@ -58,8 +58,8 @@ class SecurityController extends AppController{
 
         $user = $this->userRepository->getUser($email);
 
-        if(!$user or !$password){
-
+        if(!$email or !$password){
+            return $this->render('register',['messages' => ["Fields can't be empty"]] );
         }
 
         if($user)
