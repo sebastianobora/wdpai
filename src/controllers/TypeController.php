@@ -3,6 +3,7 @@
 require_once 'AppController.php';
 require_once __DIR__.'/../models/Type.php';
 require_once __DIR__.'/../repository/TypeRepository.php';
+require_once __DIR__.'/../repository/UserRepository.php';
 
 class TypeController extends AppController{
     const MAX_FILE_SIZE = 1024*1024;
@@ -11,52 +12,55 @@ class TypeController extends AppController{
 
     private $message = [];
     private $typeRepository;
+    private $userRepository;
+    private $avatar;
 
     public function __construct()
     {
         parent::__construct();
         $this->typeRepository = new TypeRepository();
+        $this->userRepository = new UserRepository();
+        $this->avatar = $this->userRepository->getUserAvatar($_COOKIE["user"]);
     }
 
     public function types(){
         $types = $this->typeRepository->getTypes();
-        //TODO: wyciągnąć z bazy danych avatar i podmienić
-        $this->render('types', ['types' => $types, 'avatar' => 'placeholderAvatar.png']);
+        $this->render('types', ['types' => $types, 'avatar' => $this->avatar['image']]);
     }
 
     public function games(){
         $types = $this->typeRepository->getTypeByCategory('games');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function music(){
         $types = $this->typeRepository->getTypeByCategory('music');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function series(){
         $types = $this->typeRepository->getTypeByCategory('series');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function movie(){
         $types = $this->typeRepository->getTypeByCategory('movie');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function book(){
         $types = $this->typeRepository->getTypeByCategory('book');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function youtube(){
         $types = $this->typeRepository->getTypeByCategory('youtube');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function instagram(){
         $types = $this->typeRepository->getTypeByCategory('instagram');
-        $this->render('types', ['types' => $types]);
+        $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
     public function category(){

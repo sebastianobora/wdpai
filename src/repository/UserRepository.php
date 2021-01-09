@@ -25,6 +25,15 @@ class UserRepository extends Repository
         );
     }
 
+    public function getUserAvatar($cookie){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT image FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE users.cookie = :cookie'
+        );
+        $stmt->execute([$cookie]);
+        $avatar = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $avatar;
+    }
+
     public function setCookie($cookie, $email){
         $stmt = $this->database->connect()->prepare('
         UPDATE users SET cookie = :cookie WHERE email = :email
@@ -64,13 +73,14 @@ class UserRepository extends Repository
         $detailsId = $this->createUserDetails();
 
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO users (email, password, cookie, id_users_details) VALUES (?, ?, ?, ?);
+        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?);
         ');
         $stmt->execute([
             $user->getEmail(),
             $user->getPassword(),
-            $user->getCookie(),
             $detailsId
         ]);
     }
+
+
 }
