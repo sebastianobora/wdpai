@@ -22,8 +22,10 @@
                         }
                         ?>
                     </div>
-                    <input class="form-input" name="email" type="text" placeholder="email@email.com">
-                    <input class="form-input" name="password" type="password" placeholder="password">
+                    <div class="auth-inputs-wrapper">
+                        <input class="form-input" name="email" type="text" placeholder="email@email.com">
+                        <input class="form-input" name="password" type="password" placeholder="password">
+                    </div>
                     <button type="submit">LOGIN</button>
                     <a href="register">Register</a>
                 </form>

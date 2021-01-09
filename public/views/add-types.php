@@ -3,6 +3,7 @@
         <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
         <link rel="stylesheet" type="text/css" href="/public/CSS/types.css">
         <link rel="stylesheet" type="text/css" href="/public/CSS/add-type.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/nav.css">
 
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
 
@@ -14,7 +15,7 @@
     <body>
         <div class="base-container">
             <?php
-                require_once 'side-bar.php';
+                require_once 'side-nav.php';
             ?>
 
             <main>

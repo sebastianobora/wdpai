@@ -9,11 +9,13 @@
 
 <body>
 <div class="auth-container">
-    <div class="logo">
-        <a href="/">
-            <img src="public/img/logo.svg">
+
+    <div class="auth-logo-container">
+        <a href="login">
+            <img class="img-fluid" src="public/img/logo.svg">
         </a>
     </div>
+
     <div class="login-container">
         <form class="auth-form" action="register" method="POST">
             <div class="messages">

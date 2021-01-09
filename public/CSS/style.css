@@ -67,26 +67,11 @@ button {
     background: transparent linear-gradient(180deg, #F94848 0%, #FB6731 59%, #FC7A23 100%) 0% 0% no-repeat padding-box;
 }
 
-
-nav {
-    width: 20vw;
-    height: 100%;
-    background-color: rgba(249, 72, 72, .32);
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-}
-
-.logo-href{
-    margin: 1em auto 2em auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-logo{
-    width: 80%;
-    opacity: 95%;
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border-style: none;
 }
 
 a {
@@ -105,31 +90,12 @@ li > i {
     margin-left: 1em;
     text-align: center;
     color: white;
-    padding: 0.2em;
+    padding: 1em 0.3em;
     width: 70%;
-}
-
-ul {
-    list-style-type: none;
-    color: white;
-    font: normal normal normal 13px/17px Segoe UI;
-    letter-spacing: 0.72px;
-    color: #FFFFFF;
-    opacity: 0.95;
-    height: 100%;
-    width: calc(100% - 5em);
-    margin: auto;
-    padding: 0;
-}
-
-li {
-    text-align: center;
-    margin-bottom: 1em;
 }
 
 main {
     width: 80%;
-
     display: flex;
     flex-direction: column;
     height: 100vh;

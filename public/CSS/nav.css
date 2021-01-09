@@ -1,0 +1,37 @@
+.nav {
+    width: 20vw;
+    height: 100%;
+    background-color: rgba(249, 72, 72, .32);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.nav-logo-href{
+    margin: 1em auto 2em auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-logo-image{
+    width: 80%;
+    opacity: 95%;
+}
+
+.nav-list {
+    list-style-type: none;
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0.72px;
+    color: #FFFFFF;
+    opacity: 0.95;
+    height: 100%;
+    width: calc(100% - 5em);
+    margin: auto;
+    padding: 0;
+}
+
+.nav-list-item {
+    text-align: center;
+    margin-bottom: 1em;
+}
