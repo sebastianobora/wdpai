@@ -1,0 +1,6 @@
+@import "components/style.css";
+@import "components/header/index.css";
+@import "components/add-type.css";
+@import "components/authentication.css";
+@import "components/nav.css";
+@import "components/types.css";

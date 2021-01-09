@@ -1,7 +1,6 @@
 <DOCTYPE html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
-        <link rel="stylesheet" type="text/css" href="/public/CSS/authentication.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
 
         <title>LOGIN PAGE</title>
     </head>

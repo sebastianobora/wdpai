@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="public/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/public/CSS/authentication.css">
+    <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
     <script type="text/javascript" src="./public/js/script.js" defer></script>
     <title>REGISTER</title>
 </head>

@@ -1,0 +1,42 @@
+.add-your-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20%;
+    height: 80%;
+
+    background: #FD7B0F 0% 0% no-repeat padding-box;
+    box-shadow: 0px 6px 6px #00000029;
+    border-radius: 1em;
+    opacity: 0.90;
+
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0px;
+    color: white;
+    cursor: pointer;
+    transition: background-color .15s ease-in, color .15s ease-in;
+}
+
+.add-your-type:hover{
+    background-color: white;
+}
+
+.add-your-type-href{
+    font: normal normal normal 13px/17px Segoe UI;
+    letter-spacing: 0px;
+    color: white;
+    cursor: pointer;
+    transition: color .15s ease-in;
+}
+
+.add-your-type-href:hover{
+    color: #474747;
+}
+
+.add-your-type-icon.fas{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 0.5em;
+    opacity: 0.9;
+}

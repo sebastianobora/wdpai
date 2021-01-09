@@ -1,9 +1,6 @@
 <DOCTYPE html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/public/CSS/style.css">
-        <link rel="stylesheet" type="text/css" href="/public/CSS/types.css">
-        <link rel="stylesheet" type="text/css" href="/public/CSS/add-type.css">
-        <link rel="stylesheet" type="text/css" href="/public/CSS/nav.css">
+        <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
 
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
 
@@ -15,24 +12,13 @@
     <body>
         <div class="base-container">
             <?php
-                require_once 'side-nav.php';
+                require_once 'components/side-nav.php';
             ?>
 
             <main>
-                <header>
-                    <div class="search-bar">
-                        <input placeholder="What are you looking for?">
-                    </div>
-
-                    <div class="add-your-type">
-                        <i class="fas fa-plus"></i> add your type
-                    </div>
-
-                    <div class="avatar">
-                        <img src="/public/img/avatar.svg" alt="Avatar" class="avatar">
-                    </div>
-
-                </header>
+                <?php
+                    require_once 'components/header.php';
+                ?>
 
                 <section class="js-types types-wrapper">
 
@@ -58,12 +44,12 @@
     </body>
 
     <template id="type-template">
-        <div id="">
-            <img src="">
-            <div>
+        <div class="type-wrapper" id="">
+            <img class="type-image" src="">
+            <div class="type-content">
                 <h2>title</h2>
                 <p>description</p>
-                <div class="social-section">
+                <div class="type-social">
 
                     <div class="like">
                         <i class="fas fa-heart"></i>
