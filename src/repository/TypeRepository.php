@@ -34,6 +34,7 @@ class TypeRepository extends Repository
         VALUES (?, ?, ?, ?, ?)');
 
         ## tutaj dorobić wyciągnięcie po ciasteczku pobieranie id osoby, która dodaje projekt
+        //TODO: znaleźć usera po emailu i pobrać jego ID
         $tempId = $_COOKIE['user'];
 
         $stmt->execute([

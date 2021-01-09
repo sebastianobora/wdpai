@@ -1,6 +1,6 @@
 const inputs = document.querySelector("div.inputs");
-const emailInput = inputs.querySelector('div.column input[name="email"]');
-const confirmedPasswordInput = inputs.querySelector('div.column input[name="confirmedPassword"]');
+const emailInput = inputs.querySelector('input[name="email"]');
+const confirmedPasswordInput = inputs.querySelector('input[name="confirmedPassword"]');
 
 function isEmail(email) {
     return /\S+@\S+\.\S+/.test(email);

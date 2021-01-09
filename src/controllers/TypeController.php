@@ -20,7 +20,8 @@ class TypeController extends AppController{
 
     public function types(){
         $types = $this->typeRepository->getTypes();
-        $this->render('types', ['types' => $types]);
+        //TODO: wyciągnąć z bazy danych avatar i podmienić
+        $this->render('types', ['types' => $types, 'avatar' => 'placeholderAvatar.png']);
     }
 
     public function games(){

@@ -33,7 +33,7 @@ class Routing {
             $action = 'index';
         }
 
-        if(isset($_COOKIE["user"]) and ($action == 'login' or 'index')){
+        if(isset($_COOKIE["user"]) and ($action == 'login' or $action == 'index')){
             $action = 'types';
             $controller = 'TypeController';
         }

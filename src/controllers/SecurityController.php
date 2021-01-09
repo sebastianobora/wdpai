@@ -36,7 +36,7 @@ class SecurityController extends AppController{
         }
 
         //return $this->render('types');
-        setcookie("user", $user->getId(), time() + (86400 * 30));
+        setcookie("user", $user->getEmail(), time() + (86400 * 30));
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("location: {$url}/types");
@@ -48,6 +48,32 @@ class SecurityController extends AppController{
     }
 
     public function register(){
-        $this->render('register');
+        if(!$this->isPost()){
+            return $this->render('register');
+        }
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmedPassword = $_POST['confirmedPassword'];
+
+        $user = $this->userRepository->getUser($email);
+
+        if(!$user or !$password){
+
+        }
+
+        if($user)
+        {
+            return $this->render('register', ['messages' => ["User with this email already exist!"]]);
+        }
+        if($password != $confirmedPassword)
+        {
+            return $this->render('register', ['messages' => ["Passwords do not match!"]]);
+        }
+
+        $user = new User($_POST['email'], $_POST['password']);
+        $this->userRepository->addUser($user);
+
+        return $this->render("login", ['messages' => ["Account created properly, now you can log in!"]]);
     }
 }

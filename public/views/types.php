@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="avatar">
-                    <img src="/public/img/avatar.svg" alt="Avatar" class="avatar">
+                    <img src="/public/uploads/<?= $avatar; ?>" alt="Avatar" class="avatar">
                 </div>
 
             </header>

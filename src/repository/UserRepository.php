@@ -20,9 +20,30 @@ class UserRepository extends Repository
         }
 
         return new User(
-            $user['id'],
             $user['email'],
             $user['password']
         );
+    }
+
+    public function createUserDetails(){//TODO: osobny controller?
+        $stmt = $this->database->connect()->prepare('
+        INSERT INTO users_details (image) VALUES (?) RETURNING id;
+        ');
+        $stmt->execute(["placeholderAvatar.png"]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
+    public function addUser(User $user)
+    {
+        $detailsId = $this->createUserDetails();
+
+        $stmt = $this->database->connect()->prepare('
+        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?);
+        ');
+        $stmt->execute([
+            $user->getEmail(),
+            $user->getPassword(),
+            $detailsId
+        ]);
     }
 }

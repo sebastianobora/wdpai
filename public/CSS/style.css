@@ -40,7 +40,7 @@ form.login {
 
 .inputs{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -236,14 +236,15 @@ header {
 }
 
 .avatar {
-    vertical-align: middle;
+    vertical-align: top;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
     border-radius: 50%;
-    height: 90%;
   }
 
 .no-valid {
-    border: 3px solid red;
+    border: 2px solid red;
     border-radius: 1em;
-    box-shadow: 0 0 0.7em red;
     outline: none;
 }

@@ -23,16 +23,9 @@
                 ?>
             </div>
             <div class="inputs">
-                <div class="column">
-                    <input name="email" type="text" placeholder="email@email.com">
-                    <input name="password" type="password" placeholder="password">
-                    <input name="confirmedPassword" type="password" placeholder="confirm password">
-                </div>
-                <div class="column">
-                    <input name="name" type="text" placeholder="name">
-                    <input name="surname" type="text" placeholder="surname">
-                    <input name="phone" type="text" placeholder="phone">
-                </div>
+                <input name="email" type="text" placeholder="email@email.com">
+                <input name="password" type="password" placeholder="password">
+                <input name="confirmedPassword" type="password" placeholder="confirm password">
             </div>
             <button type="submit">REGISTER</button>
         </form>
