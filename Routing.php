@@ -3,7 +3,7 @@
 require_once 'src/controllers/DefaultController.php';
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/TypeController.php';
-
+require_once 'src/repository/UserRepository.php';
 class Routing {
     public static $routes; # url oraz ścieżka kontrolera
 
@@ -34,13 +34,18 @@ class Routing {
         }
 
         if(isset($_COOKIE["user"]) and ($action == 'login' or $action == 'index' or $action == 'register')){
-            $action = 'types';
-            $controller = 'TypeController';
+            $userRepository = new UserRepository();
+            if(!$userRepository->getUserByCookie($_COOKIE["user"])){
+                $action = 'index';
+                $controller = 'DefaultController';
+            }else{
+                $action = 'types';
+                $controller = 'TypeController';
+            }
         }
 
         $object = new $controller;
         $object->$action();
     }
 }
-
 ?>

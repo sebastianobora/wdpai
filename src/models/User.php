@@ -7,13 +7,13 @@ class User
     private $password;
     private $name;
     private $surname;
+    private $cookie;
     
     public function __construct($email, $password)
     {
         $this->email = $email;
         $this->password = $password;
     }
-
 
     public function getEmail(): string
     {
@@ -26,6 +26,10 @@ class User
         $this->email = $email;
     }
 
+    public function getCookie()
+    {
+        return $this->cookie;
+    }
 
     public function getPassword(): string
     {

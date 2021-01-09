@@ -31,12 +31,14 @@ class SecurityController extends AppController{
             return $this->render('login', ['messages' => ["User with this email not exist!"]]);
         }
         //TODO: to u góry chyba już można usunąć
-        if($user -> getPassword() !== $password){
+        if($user -> getPassword() !== md5($password)){
             return $this->render('login', ['messages' => ["Wrong password!"]]);
         }
 
         //return $this->render('types');
-        setcookie("user", $user->getEmail(), time() + (86400 * 30));
+        $cookieValue = md5($user->getEmail());
+        setcookie("user", $cookieValue , time() + (86400 * 30));
+        $this-> userRepository->setCookie($cookieValue, $user->getEmail());
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("location: {$url}/types");
@@ -71,7 +73,7 @@ class SecurityController extends AppController{
             return $this->render('register', ['messages' => ["Passwords do not match!"]]);
         }
 
-        $user = new User($_POST['email'], $_POST['password']);
+        $user = new User($_POST['email'], md5($_POST['password']));
         $this->userRepository->addUser($user);
 
         return $this->render("login", ['messages' => ["Account created properly, now you can log in!"]]);

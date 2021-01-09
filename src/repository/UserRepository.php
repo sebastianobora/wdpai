@@ -25,6 +25,32 @@ class UserRepository extends Repository
         );
     }
 
+    public function setCookie($cookie, $email){
+        $stmt = $this->database->connect()->prepare('
+        UPDATE users SET cookie = :cookie WHERE email = :email
+        ');
+        $stmt->execute([$cookie, $email]);
+    }
+
+    public function getUserByCookie($cookie){
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.users WHERE cookie = :cookie
+        ');
+        $stmt->bindParam(':cookie', $cookie, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user == false) {
+            return null;
+        }
+
+        return new User(
+            $user['email'],
+            $user['password'],
+        );
+    }
+
     public function createUserDetails(){//TODO: osobny controller?
         $stmt = $this->database->connect()->prepare('
         INSERT INTO users_details (image) VALUES (?) RETURNING id;
@@ -38,11 +64,12 @@ class UserRepository extends Repository
         $detailsId = $this->createUserDetails();
 
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?);
+        INSERT INTO users (email, password, cookie, id_users_details) VALUES (?, ?, ?, ?);
         ');
         $stmt->execute([
             $user->getEmail(),
             $user->getPassword(),
+            $user->getCookie(),
             $detailsId
         ]);
     }
