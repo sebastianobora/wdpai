@@ -37,7 +37,7 @@ class SecurityController extends AppController{
 
         //return $this->render('types');
         $cookieValue = md5($user->getEmail());
-        setcookie("user", $cookieValue , time() + (86400 * 30));
+        setcookie("user", $cookieValue , time() + (86400));
         $this-> userRepository->setCookie($cookieValue, $user->getEmail());
 
         $url = "http://$_SERVER[HTTP_HOST]";
