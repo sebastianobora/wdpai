@@ -5,6 +5,14 @@ require_once __DIR__."/../models/Type.php";
 
 class TypeRepository extends Repository
 {
+    private $userRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userRepository = new UserRepository();
+    }
+
     public function getType(int $id): ?Type
     {
         $stmt = $this->database->connect()->prepare('
@@ -33,18 +41,12 @@ class TypeRepository extends Repository
         INSERT INTO types (title, description, created_at, image, id_users)
         VALUES (?, ?, ?, ?, ?)');
 
-        ## tutaj dorobić wyciągnięcie po ciasteczku pobieranie id osoby, która dodaje projekt
-        //TODO: znaleźć usera po emailu i pobrać jego ID
-        //$tempId = $_COOKIE['user'];
-        $tempId = 4;
-        //TODO: fetch user by cookie
-
         $stmt->execute([
             $type->getTitle(),
             $type->getDescription(),
             $date->format('Y-m-d'),
             $type->getImage(),
-            $tempId
+            $this->userRepository->getUserId($_COOKIE["user"])
         ]);
     }
 

@@ -20,7 +20,7 @@ class TypeController extends AppController{
         parent::__construct();
         $this->typeRepository = new TypeRepository();
         $this->userRepository = new UserRepository();
-        $this->avatar = $this->userRepository->getUserAvatar($_COOKIE["user"]);
+        $this->avatar = $this->userRepository->getUserAvatar($_COOKIE["user"]);//TODO: może zostać, raczej do zmiany?
     }
 
     public function types(){
@@ -63,7 +63,7 @@ class TypeController extends AppController{
         $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
-    public function category(){
+    public function category(){//TODO: remove
         if($this->isPost()){
             $types = $this->typeRepository->getTypeByCategory($_POST['category']);
             $this->render('types', ['types' => $types]);

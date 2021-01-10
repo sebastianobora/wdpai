@@ -25,13 +25,19 @@ class UserRepository extends Repository
         );
     }
 
+    public function getUserId($cookie){
+        $stmt = $this->database->connect()->prepare('
+        SELECT id FROM public.users WHERE cookie = :cookie');
+        $stmt->execute([$cookie]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
     public function getUserAvatar($cookie){
         $stmt = $this->database->connect()->prepare(
-            'SELECT image FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE users.cookie = :cookie'
+            'SELECT image FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE cookie = :cookie'
         );
         $stmt->execute([$cookie]);
-        $avatar = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $avatar;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function setCookie($cookie, $email){
@@ -41,7 +47,8 @@ class UserRepository extends Repository
         $stmt->execute([$cookie, $email]);
     }
 
-    public function getUserByCookie($cookie){
+    public function getUserByCookie($cookie): ?User
+    {
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users WHERE cookie = :cookie
         ');
