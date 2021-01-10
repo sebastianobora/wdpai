@@ -19,6 +19,13 @@ button {
     color: white;
     margin: 1em;
     line-height: 2.5em;
+    cursor: pointer;
+    transition: background-color .15s ease-in, color .15s ease-in;
+}
+
+button:hover{
+    background-color: white;
+    color: #474747;
 }
 
 .form-input{
@@ -92,21 +99,21 @@ li > i {
     color: white;
     padding: 1em 0.3em;
     width: 70%;
+    transition: background-color .15s ease-in, color .15s ease-in, color .15s ease-in;
 }
+
+.button:hover{
+    background-color: white;
+    color: #474747;
+}
+
+
 
 main {
     width: 80%;
     display: flex;
     flex-direction: column;
     height: 100vh;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1em 2em 0em 2em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.32);
-    position: relative;
 }
 
 .fa, .fas {

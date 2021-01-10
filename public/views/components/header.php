@@ -1,4 +1,4 @@
-<header>
+<header class="header">
     <div class="search-bar">
         <input class="form-input search-bar-input" placeholder="What are you looking for?">
     </div>

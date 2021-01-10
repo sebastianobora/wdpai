@@ -21,7 +21,7 @@
                 require_once 'components/header.php';
             ?>
 
-            <section class="js-types types-wrapper types">
+            <section class="js-types types-wrapper">
                 <?php foreach($types as $index => $type): ?>
 
                 <div class="type-wrapper" id="type-<?= $index ?>">
