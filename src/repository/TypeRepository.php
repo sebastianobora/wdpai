@@ -13,40 +13,20 @@ class TypeRepository extends Repository
         $this->userRepository = new UserRepository();
     }
 
-    public function getType(int $id): ?Type
-    {
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE id = :id
-        ');
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $type = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($type == false) {
-            return null;
-        }
-
-        return new Type(
-            $type['title'],
-            $type['description'],
-            $type['image']
-        );
-    }
-
     public function addType(Type $type): void
     {
         $date = new DateTime();
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO types (title, description, created_at, image, id_users)
-        VALUES (?, ?, ?, ?, ?)');
+        INSERT INTO types (title, description, created_at, image, id_users, category)
+        VALUES (?, ?, ?, ?, ?, ?)');
 
         $stmt->execute([
             $type->getTitle(),
             $type->getDescription(),
             $date->format('Y-m-d'),
             $type->getImage(),
-            $this->userRepository->getUserId($_COOKIE["user"])
+            $this->userRepository->getUserId($_COOKIE["user"]),
+            $type->getCategory()
         ]);
     }
 
@@ -63,7 +43,8 @@ class TypeRepository extends Repository
             $result[] = new Type(
                 $type['title'],
                 $type['description'],
-                $type['image']
+                $type['image'],
+                $type['category']
             );
         }
         return $result;
@@ -83,7 +64,8 @@ class TypeRepository extends Repository
             $result[] = new Type(
                 $type['title'],
                 $type['description'],
-                $type['image']
+                $type['image'],
+                $type['category']
             );
         }
         return $result;

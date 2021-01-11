@@ -3,8 +3,6 @@
         <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
 
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
-
-        <script type="text/javascript" src="./public/js/button.js" defer></script>
         <script type="text/javascript" src="./public/js/search.js" defer></script>
 
         <title>TYPES</title>
@@ -31,6 +29,12 @@
                                 }
                             }
                             ?>
+                            <select name="category">
+                                <option value="games">Games</option>
+                                <option value="music">Music</option>
+                                <option value="series">Series</option>
+                                <option value="movie">Movie</option>
+                            </select>
                             <input class="form-input" name="title" type="text" placeholder="title">
                             <textarea class="form-input" name="description" rows="5" placeholder="description"></textarea>
                             <input class="form-input" type="file" name="file">

@@ -1,6 +1,6 @@
 <header class="header">
     <div class="search-bar">
-        <input class="form-input search-bar-input" placeholder="What are you looking for?">
+        <input class="form-input search-bar-input js-search-bar-input" placeholder="What are you looking for?">
     </div>
 
     <div class="add-your-type">

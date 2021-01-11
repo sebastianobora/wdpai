@@ -63,13 +63,6 @@ class TypeController extends AppController{
         $this->render('types', ['types' => $types, 'avatar' =>$this->avatar['image']]);
     }
 
-    public function category(){//TODO: remove
-        if($this->isPost()){
-            $types = $this->typeRepository->getTypeByCategory($_POST['category']);
-            $this->render('types', ['types' => $types]);
-        }
-    }
-
     public function search()
     {
         $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
@@ -88,24 +81,27 @@ class TypeController extends AppController{
     public function addType(){
 
         # file ustailiśmy w widoku name ='file'
-        if($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])){
+        if($this->isPost() && $this->validate($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])){
             move_uploaded_file(
                 $_FILES['file']['tmp_name'],
                 dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['file']['name']
             ); # łączymy w drugim argumencie ścieżkę do katalogu + ścieżka docelowa pliku + nzwa pliku
 
-            $type = new Type($_POST['title'], $_POST['description'], $_FILES['file']['name']);
+            $type = new Type($_POST['title'], $_POST['description'], $_FILES['file']['name'], $_POST['category']);
             $this->typeRepository->addType($type);
 
-            return $this->render("types", ['messages' => $this->message, 'types' => $this->typeRepository->getTypes()]);
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("location: {$url}/types");
         }
 
-        return $this ->render("add-types", ['messages' => $this->message]);
+        return $this ->render("add-types", ['messages' => $this->message, 'avatar' =>$this->avatar['image']]);
     }
+
 
     private function validate(array $file): bool{
         if($file['size'] > self::MAX_FILE_SIZE){
             $this->message[] = 'File is too large for destination file system';
+            var_dump($this->message);
             return false;
         }
         if(!isset($file['type']) && !in_array($file['type'], self::SUPPORTED_TYPES)){

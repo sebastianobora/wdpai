@@ -1,4 +1,4 @@
-const searchBar = document.querySelector('input[placeholder="What are you looking for?"]');
+const searchBar = document.querySelector(".js-search-bar-input");
 const typeContainer = document.querySelector(".js-types");
 
 searchBar.addEventListener("keyup", function (event) {

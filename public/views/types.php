@@ -5,7 +5,6 @@
 
     <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="./public/js/search.js" defer></script>
-    <script type="text/javascript" src="./public/js/button.js" defer></script>
 
     <title>TYPES</title>
 </head>
