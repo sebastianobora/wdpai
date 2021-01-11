@@ -45,6 +45,8 @@ class SecurityController extends AppController{
     }
 
     public function logout(){
+        $user = $this->userRepository->getUserByCookie($_COOKIE["user"]);
+        $this->userRepository->setCookie(null, $user->getEmail());
         setcookie("user", "", time() - 3600);
         $this->render('login');
     }
@@ -76,6 +78,6 @@ class SecurityController extends AppController{
         $user = new User($_POST['email'], md5($_POST['password']));
         $this->userRepository->addUser($user);
 
-        return $this->render("login", ['messages' => ["Account created properly, now you can log in!"]]);
+        $this->render('login', ['messages' => ["Account created properly, now you can log in!"]]);
     }
 }

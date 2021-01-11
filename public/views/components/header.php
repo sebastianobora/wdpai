@@ -1,3 +1,8 @@
+<head>
+    <script type="text/javascript" src="./public/js/search.js" defer></script>
+    <script type="text/javascript" src="./public/js/dropdown.js" defer></script>
+</head>
+
 <header class="header">
     <div class="search-bar">
         <input class="form-input search-bar-input js-search-bar-input" placeholder="What are you looking for?">
@@ -9,7 +14,18 @@
         </a>
     </div>
 
-    <div class="avatar">
-        <img src="/public/uploads/<?= $avatar; ?>" alt="Avatar" class="avatar-image img-fluid">
+    <div class="avatar-dropdown">
+
+        <div class="avatar">
+            <a onclick="dropdown()">
+                <img src="/public/uploads/<?= $avatar; ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
+            </a>
+        </div>
+
+        <div class="avatar-dropdown-content js-avatar-dropdown-content">
+            <a class="avatar-dropdown-href" href="#home">My profile</a>
+            <a class="avatar-dropdown-href" href="#myTypes">My types</a>
+            <a class="avatar-dropdown-href" href="logout">Logout</a>
+        </div>
     </div>
 </header>

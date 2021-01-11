@@ -3,9 +3,8 @@
         <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
 
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="./public/js/search.js" defer></script>
 
-        <title>TYPES</title>
+        <title>Add your type</title>
     </head>
     <body>
         <div class="base-container">
@@ -29,7 +28,7 @@
                                 }
                             }
                             ?>
-                            <select name="category">
+                            <select name="category", >
                                 <option value="games">Games</option>
                                 <option value="music">Music</option>
                                 <option value="series">Series</option>

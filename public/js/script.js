@@ -1,6 +1,6 @@
-const inputs = document.querySelector("div.inputs");
-const emailInput = inputs.querySelector('input[name="email"]');
-const confirmedPasswordInput = inputs.querySelector('input[name="confirmedPassword"]');
+const emailInput = document.querySelector('.js-input-email');
+const passwordInput = document.querySelector('.js-input-password');
+const confirmedPasswordInput = document.querySelector('.js-input-confirmedPassword');
 
 function isEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
@@ -25,7 +25,7 @@ function validateEmail(){
 function validatePassword(){
     //TODO: poziom skomplikowania hasła i czy jest odpowiednio zapisane
     setTimeout(function () {
-            const condition = arePasswordsSame(confirmedPasswordInput.previousElementSibling.value, confirmedPasswordInput.value);
+            const condition = arePasswordsSame(passwordInput.value, confirmedPasswordInput.value);
             markValidation(confirmedPasswordInput, condition);
         },
         1000

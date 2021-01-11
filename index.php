@@ -18,8 +18,10 @@ Routing::get('youtube', 'TypeController');
 Routing::get('instagram', 'TypeController');
 
 Routing::post('login','SecurityController');
-Routing::post('addType','TypeController');
 Routing::post('register', 'SecurityController');
+Routing::get('logout', 'SecurityController');
+
+Routing::post('addType','TypeController');
 Routing::post('search', 'TypeController');
 
 Routing::run($path);
