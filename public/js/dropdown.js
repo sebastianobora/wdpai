@@ -1,16 +1,19 @@
+let content = document.querySelector('.js-avatar-dropdown-content');
+let avatar = document.querySelector('.js-avatar-image');
+
 function dropdown() {
-    let x = document.querySelector('.js-avatar-dropdown-content');
-    if (x.style.display === "none" || x.style.display === "") {
-        x.style.display = "block";
+    if (content.style.display === "none" || content.style.display === "") {
+        content.style.display = "block";
+        avatar.classList.add('avatar-image-shadow');
     } else {
-        x.style.display = "none";
+        content.style.display = "none";
+        avatar.classList.remove('avatar-image-shadow');
     }
 }
 
 window.onclick = function(event){
-    let x = document.querySelector('.js-avatar-dropdown-content');
-    console.log(event.target);
     if(!event.target.matches('.js-avatar-image')){
-        x.style.display = "none";
+        content.style.display = "none";
+        avatar.classList.remove('avatar-image-shadow');
     }
 }

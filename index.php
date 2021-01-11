@@ -16,6 +16,7 @@ Routing::get('movie', 'TypeController');
 Routing::get('book', 'TypeController');
 Routing::get('youtube', 'TypeController');
 Routing::get('instagram', 'TypeController');
+Routing::get('myTypes', 'TypeController');
 
 Routing::post('login','SecurityController');
 Routing::post('register', 'SecurityController');

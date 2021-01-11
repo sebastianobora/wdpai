@@ -23,6 +23,11 @@ class TypeController extends AppController{
         $this->avatar = $this->userRepository->getUserAvatar($_COOKIE["user"]);//TODO: może zostać, raczej do zmiany?
     }
 
+    public function myTypes(){
+        $types = $this->typeRepository->getUserTypes();
+        $this->render('types', ['types' => $types, 'avatar' => $this->avatar['image']]);
+    }
+
     public function types(){
         $types = $this->typeRepository->getTypes();
         $this->render('types', ['types' => $types, 'avatar' => $this->avatar['image']]);

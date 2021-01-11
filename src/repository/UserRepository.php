@@ -25,10 +25,10 @@ class UserRepository extends Repository
         );
     }
 
-    public function getUserId($cookie){
+    public function getUserId(){
         $stmt = $this->database->connect()->prepare('
         SELECT id FROM public.users WHERE cookie = :cookie');
-        $stmt->execute([$cookie]);
+        $stmt->execute([$_COOKIE["user"]]);
         return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
     }
 

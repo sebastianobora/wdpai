@@ -25,9 +25,30 @@ class TypeRepository extends Repository
             $type->getDescription(),
             $date->format('Y-m-d'),
             $type->getImage(),
-            $this->userRepository->getUserId($_COOKIE["user"]),
+            $this->userRepository->getUserId(),
             $type->getCategory()
         ]);
+    }
+
+    public function getUserTypes(){
+        $result = [];
+        $stmt = $this->database->connect()->prepare('
+        SELECT * FROM types WHERE id_users = :id');
+        $userId = $this->userRepository->getUserId();
+
+        $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
+        $stmt-> execute();
+        $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($types as $type) {
+            $result[] = new Type(
+                $type['title'],
+                $type['description'],
+                $type['image'],
+                $type['category']
+            );
+        }
+        return $result;
     }
 
     public function getTypes(): array
@@ -54,7 +75,7 @@ class TypeRepository extends Repository
     {
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types WHERE LOWER(category) LIKE :category');
+        SELECT * FROM types WHERE LOWER(category) = :category');
 
         $stmt->bindParam(':category', $categoryString, PDO::PARAM_STR);
         $stmt-> execute();
