@@ -17,26 +17,24 @@
 
                 <section class="js-types">
 
-                    <section class="type-form-wrapper">
-                        <h1>UPLOAD</h1>
-                        <form class="add-type-form" action="addType" method="POST" ENCTYPE="multipart/form-data">
-                            <?php if(isset($messages)){
-                                foreach ($messages as $message) {
-                                    echo $message;
-                                }
-                            }
-                            ?>
-                            <select name="category">
-                                <option value="games">Games</option>
-                                <option value="music">Music</option>
-                                <option value="series">Series</option>
-                                <option value="movie">Movie</option>
-                            </select>
-                            <input class="form-input" name="title" type="text" placeholder="title">
-                            <textarea class="form-input" name="description" rows="5" placeholder="description"></textarea>
-                            <input class="form-input" type="file" name="file">
-                            <button type="submit">send</button>
-                        </form>
+                    <section class="type-details-wrapper">
+                        <div class="type-details">
+                            <img class="type-details-image" src="/public/uploads/<?= $type->getImage(); ?>">
+                            <div class="type-details-content">
+                                <h1><?= $type->getTitle(); ?></h1>
+                                <p><?= $type->getDescription(); ?></p>
+                                <div class="type-social">
+                                    <div class="like">
+                                        <i class="fas fa-heart"></i>
+                                        <span><?= $type->getLike(); ?></span>
+                                    </div>
+                                    <div class="dislike">
+                                        <i class="fas fa-heart-broken"></i>
+                                        <span><?= $type->getDislike(); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
 
                 </section>

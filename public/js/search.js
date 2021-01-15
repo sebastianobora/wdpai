@@ -19,6 +19,9 @@ function fetchTypes(input, data){
         return response.json();
     }).then(function (types) {
         typeContainer.innerHTML = "";
+        if(!typeContainer.classList.contains("types-wrapper")){
+            typeContainer.classList.add("types-wrapper");
+        }
         loadTypes(types)
     });
 }
@@ -32,7 +35,6 @@ function loadTypes(types) {
 
 function createType(type) {
     const template = document.querySelector("#type-template");
-
     const clone = template.content.cloneNode(true);
 
     const div = clone.querySelector("div");
@@ -44,10 +46,10 @@ function createType(type) {
     title.innerHTML = type.title;
     const description = clone.querySelector("p");
     description.innerHTML = type.description;
-    const like = clone.querySelector(".like>span");
-    like.innerText = type.like;
-    const rate = clone.querySelector(".like>span");
-    rate.innerText = type.rate;
+    const like = clone.querySelector(".js-like");
+    like.textContent = type.like;
+    const dislike = clone.querySelector(".js-dislike");
+    dislike.textContent = type.dislike;
 
     typeContainer.appendChild(clone);
 }

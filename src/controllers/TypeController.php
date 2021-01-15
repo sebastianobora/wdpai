@@ -28,8 +28,17 @@ class TypeController extends AppController{
         $this->render('types', ['types' => $types, 'avatar' => $this->avatar['image']]);
     }
 
-    public function types(){
-        $types = $this->typeRepository->getTypes();
+    public function type($id){
+        $type = $this->typeRepository->getTypeById($id);
+        $this->render('type', ['type' => $type, 'avatar' => $this->avatar['image']]);
+    }
+
+    public function types($category){
+        if($category){
+            $types = $this->typeRepository->getTypeByCategory($category);
+        }else{
+            $types = $this->typeRepository->getTypes();
+        }
         $this->render('types', ['types' => $types, 'avatar' => $this->avatar['image']]);
     }
 
@@ -115,5 +124,15 @@ class TypeController extends AppController{
         }
 
         return true;
+    }
+
+    public function like (int $id){
+        $this->typeRepository->like($id);
+        http_response_code(200);
+    }
+
+    public function dislike (int $id){
+        $this->typeRepository->dislike($id);
+        http_response_code(200);
     }
 }

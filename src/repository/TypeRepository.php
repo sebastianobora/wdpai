@@ -45,10 +45,29 @@ class TypeRepository extends Repository
                 $type['title'],
                 $type['description'],
                 $type['image'],
-                $type['category']
+                $type['category'],
+                $type['like'],
+                $type['dislike'],
+                $type['id']
             );
         }
         return $result;
+    }
+
+    public function getTypeById($id){
+        $stmt = $this->database->connect()->prepare('
+        SELECT * FROM types WHERE id = :id');
+        $stmt->bindParam(':id',$id, PDO::PARAM_STR);
+        $stmt-> execute();
+        $type = $stmt->fetch(PDO::FETCH_ASSOC);
+        return new Type(
+                $type['title'],
+                $type['description'],
+                $type['image'],
+                $type['category'],
+                $type['like'],
+                $type['dislike'],
+                $type['id']);
     }
 
     public function getTypes(): array
@@ -65,7 +84,10 @@ class TypeRepository extends Repository
                 $type['title'],
                 $type['description'],
                 $type['image'],
-                $type['category']
+                $type['category'],
+                $type['like'],
+                $type['dislike'],
+                $type['id']
             );
         }
         return $result;
@@ -86,7 +108,10 @@ class TypeRepository extends Repository
                 $type['title'],
                 $type['description'],
                 $type['image'],
-                $type['category']
+                $type['category'],
+                $type['like'],
+                $type['dislike'],
+                $type['id']
             );
         }
         return $result;
@@ -103,5 +128,21 @@ class TypeRepository extends Repository
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function like(int $id){
+        $stmt = $this->database->connect()->prepare('
+            UPDATE types SET "like" = "like" + 1 WHERE id = :id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function dislike(int $id){
+        $stmt = $this->database->connect()->prepare('
+            UPDATE types SET dislike = dislike + 1 WHERE id = :id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

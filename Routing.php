@@ -3,6 +3,7 @@
 require_once 'src/controllers/DefaultController.php';
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/TypeController.php';
+require_once 'src/controllers/UserController.php';
 require_once 'src/repository/UserRepository.php';
 class Routing {
     public static $routes; # url oraz ścieżka kontrolera
@@ -16,7 +17,8 @@ class Routing {
     }
 
     public static function run($url){
-        $action = explode("/", $url)[0];
+        $urlParts = explode("/", $url);
+        $action = $urlParts[0];
 
         if(!array_key_exists($action, self::$routes)){
             die('Wrong url!');
@@ -44,8 +46,23 @@ class Routing {
             }
         }
 
+        $arg = $urlParts[1] ?? '';
+
+        if($action == 'types' and $arg and !in_array($arg, Type::$categories)){
+            die('No such category! Wrong url!');
+        }
+
+        $typeRepository = new TypeRepository();
+        if($action == 'type' and $arg and !$typeRepository->getTypeById($arg)){
+            die('No such type! Wrong url!');
+        }
+
+        if($action == 'type' and !$arg){
+            die('Wrong url');
+        }
+
         $object = new $controller;
-        $object->$action();
+        $object->$action($arg);
     }
 }
 ?>

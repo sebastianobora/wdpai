@@ -1,6 +1,6 @@
 <head>
-    <script type="text/javascript" src="./public/js/search.js" defer></script>
-    <script type="text/javascript" src="./public/js/dropdown.js" defer></script>
+    <script type="text/javascript" src="/public/js/search.js" defer></script>
+    <script type="text/javascript" src="/public/js/dropdown.js" defer></script>
 </head>
 
 <header class="header">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="add-your-type">
-        <a class="add-your-type-href" href="addType">
+        <a class="add-your-type-href" href="/addType">
             <i class="fas fa-plus add-your-type-icon"></i> add your type
         </a>
     </div>
@@ -24,8 +24,8 @@
 
         <div class="avatar-dropdown-content js-avatar-dropdown-content">
             <a class="avatar-dropdown-href" href="#home">My profile</a>
-            <a class="avatar-dropdown-href" href="myTypes">My types</a>
-            <a class="avatar-dropdown-href" href="logout">Logout</a>
+            <a class="avatar-dropdown-href" href="/myTypes">My types</a>
+            <a class="avatar-dropdown-href" href="/logout">Logout</a>
         </div>
     </div>
 </header>

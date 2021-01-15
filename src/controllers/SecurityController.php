@@ -58,6 +58,7 @@ class SecurityController extends AppController{
 
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $username = $_POST['username'];
         $confirmedPassword = $_POST['confirmedPassword'];
 
         $user = $this->userRepository->getUser($email);
@@ -75,7 +76,7 @@ class SecurityController extends AppController{
             return $this->render('register', ['messages' => ["Passwords do not match!"]]);
         }
 
-        $user = new User($_POST['email'], md5($_POST['password']));
+        $user = new User($email, md5($password), $username);
         $this->userRepository->addUser($user);
 
         $this->render('login', ['messages' => ["Account created properly, now you can log in!"]]);

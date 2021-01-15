@@ -2,6 +2,11 @@ body {
     margin: 0;
 }
 
+.js-content{
+    width: 100%;
+    height: 100%;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
