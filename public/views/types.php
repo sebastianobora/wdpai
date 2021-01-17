@@ -24,7 +24,7 @@
                             <img class="type-image" src="/public/uploads/<?= $type->getImage(); ?>">
                         </a>
                         <div class="type-content">
-                            <a href="/type/<?=$type->getId() ?>">
+                            <a class="type-href-title" href="/type/<?=$type->getId() ?>">
                                 <h2><?= $type->getTitle(); ?></h2>
                             </a>
                             <p><?= $type->getDescription(); ?></p>

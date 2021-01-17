@@ -6,11 +6,13 @@ require_once __DIR__.'/../repository/UserRepository.php';
 
 class SecurityController extends AppController{
     private $userRepository;
+    private $userDetailsRepository;
 
     public function __construct()
     {
         parent::__construct();
         $this->userRepository = new UserRepository();
+        $this->userDetailsRepository = new UserDetailsRepository();
     }
 
     public function login(){
@@ -77,7 +79,8 @@ class SecurityController extends AppController{
         }
 
         $user = new User($email, md5($password), $username);
-        $this->userRepository->addUser($user);
+        $detailsId = $this->userDetailsRepository->createUserDetails($user->getUsername());
+        $this->userRepository->addUser($user, $detailsId);
 
         $this->render('login', ['messages' => ["Account created properly, now you can log in!"]]);
     }

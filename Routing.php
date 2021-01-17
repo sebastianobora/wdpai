@@ -5,6 +5,7 @@ require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/TypeController.php';
 require_once 'src/controllers/UserController.php';
 require_once 'src/repository/UserRepository.php';
+require_once 'src/repository/UserDetailsRepository.php';
 class Routing {
     public static $routes; # url oraz ścieżka kontrolera
 
@@ -57,7 +58,12 @@ class Routing {
             die('No such type! Wrong url!');
         }
 
-        if($action == 'type' and !$arg){
+        $userDetailsRepository = new UserDetailsRepository();
+        if($action == 'user' and $arg and !$userDetailsRepository->getUserDetailsByUsername($arg)){
+            die('No such user! Wrong url!');
+        }
+
+        if(($action == 'type' or $action == 'user') and !$arg){
             die('Wrong url');
         }
 

@@ -33,14 +33,6 @@ class UserRepository extends Repository
         return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
     }
 
-    public function getUserAvatar($cookie){
-        $stmt = $this->database->connect()->prepare(
-            'SELECT image FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE cookie = :cookie'
-        );
-        $stmt->execute([$cookie]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
     public function setCookie($cookie, $email){
         $stmt = $this->database->connect()->prepare('
         UPDATE users SET cookie = :cookie WHERE email = :email
@@ -69,30 +61,19 @@ class UserRepository extends Repository
         );
     }
 
-    public function createUserDetails(){//TODO: osobny controller?
-        $stmt = $this->database->connect()->prepare('
-        INSERT INTO users_details (image) VALUES (?) RETURNING id;
-        ');
-        $stmt->execute(["placeholderAvatar.png"]);
-        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
-    }
-
-    public function addUser(User $user)
+    public function addUser(User $user, $detailsId)
     {
-        $detailsId = $this->createUserDetails();
-
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO users (email, password, username, id_users_details) VALUES (?, ?, ?, ?);
+        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?);
         ');
         $stmt->execute([
             $user->getEmail(),
             $user->getPassword(),
-            $user->getUsername(),
             $detailsId
         ]);
     }
 
-    public function userExist($username){
+/*    public function userExist($username){
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users WHERE username = :username
         ');
@@ -105,5 +86,5 @@ class UserRepository extends Repository
         }else{
             return false;
         }
-    }
+    }*/
 }

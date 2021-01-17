@@ -18,12 +18,12 @@
 
         <div class="avatar">
             <a onclick="dropdown()">
-                <img src="/public/uploads/<?= $avatar; ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
+                <img src="/public/uploads/<?= $userDetails->getImage(); ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
             </a>
         </div>
 
         <div class="avatar-dropdown-content js-avatar-dropdown-content">
-            <a class="avatar-dropdown-href" href="#home">My profile</a>
+            <a class="avatar-dropdown-href" href="/user/<?= $userDetails->getUsername(); ?>">My profile</a>
             <a class="avatar-dropdown-href" href="/myTypes">My types</a>
             <a class="avatar-dropdown-href" href="/logout">Logout</a>
         </div>

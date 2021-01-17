@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
-    <g id="Avatar" transform="translate(-110 -246)">
-        <circle id="Ellipse_40" data-name="Ellipse 40" cx="60" cy="60" r="60" transform="translate(110 246)" fill="#bce0fd"/>
-        <path id="Union_12" data-name="Union 12" d="M0,40V35c0-5.5,9-10,20-10s20,4.5,20,10v5ZM10,10A10,10,0,1,1,20,20,10,10,0,0,1,10,10Z" transform="translate(150 286)" fill="#2699fb"/>
-    </g>
-</svg>

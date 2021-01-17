@@ -42,3 +42,11 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.type-href-title:link, .type-href-title:visited{
+    color: #474747;
+}
+
+.type-href-title:active{
+    color: #f94848;
+}
