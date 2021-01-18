@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
         <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/public/js/statistics.js" defer></script>
         <title>Add your type</title>
     </head>
     <body>

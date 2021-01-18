@@ -13,9 +13,11 @@ class Type
     private $likes;
     private $dislikes;
     private $id;
+    private $isLiked;
 
-    public function __construct($title, $description, $image, $category, $likes = 0, $dislikes = 0, $id = null)
+    public function __construct($title, $description, $image, $category, $likes = 0, $dislikes = 0, $id = null, $isLiked = null)
     {
+        $this->isLiked = $isLiked;
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
@@ -23,6 +25,11 @@ class Type
         $this->likes = $likes;
         $this->dislikes = $dislikes;
         $this->id = $id;
+    }
+
+    public function getIsLiked()
+    {
+        return $this->isLiked;
     }
 
     public function getTitle(): string

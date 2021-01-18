@@ -30,12 +30,16 @@ class TypeRepository extends Repository
         ]);
     }
 
-    public function getUserTypes($userId){
+    public function getUserTypes($Id){
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types_statistics WHERE id_users = :id');
+                SELECT title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts WHERE id_users = :id');
 
-        $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
+
+        $stmt->bindParam(':id',$Id, PDO::PARAM_STR);
         $stmt-> execute();
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -47,7 +51,8 @@ class TypeRepository extends Repository
                 $type['category'],
                 $type['likes'],
                 $type['dislikes'],
-                $type['id']
+                $type['id'],
+                $type['isliked']
             );
         }
         return $result;
@@ -55,7 +60,10 @@ class TypeRepository extends Repository
 
     public function getTypeById($id){
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types_statistics WHERE id = :id');
+        SELECT title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts WHERE id = :id');
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
         $stmt->bindParam(':id',$id, PDO::PARAM_STR);
         $stmt-> execute();
         $type = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -66,17 +74,25 @@ class TypeRepository extends Repository
                 $type['category'],
                 $type['likes'],
                 $type['dislikes'],
-                $type['id']);
+                $type['id'],
+                $type['isliked']
+        );
     }
 
     public function getTypes(): array
     {
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types_statistics
-        ');
+        SELECT title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts');
+
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
+
         $stmt->execute();
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
         foreach ($types as $type){
             $result[] = new Type(
@@ -86,7 +102,8 @@ class TypeRepository extends Repository
                 $type['category'],
                 $type['likes'],
                 $type['dislikes'],
-                $type['id']
+                $type['id'],
+                $type['isliked']
             );
         }
         return $result;
@@ -96,7 +113,11 @@ class TypeRepository extends Repository
     {
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types_statistics WHERE LOWER(category) = :category');
+        SELECT title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts WHERE LOWER(category) = :category');
+
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
 
         $stmt->bindParam(':category', $categoryString, PDO::PARAM_STR);
         $stmt-> execute();
@@ -110,7 +131,8 @@ class TypeRepository extends Repository
                 $type['category'],
                 $type['likes'],
                 $type['dislikes'],
-                $type['id']
+                $type['id'],
+                $type['isliked']
             );
         }
         return $result;
@@ -121,8 +143,12 @@ class TypeRepository extends Repository
         $searchString = '%' . strtolower($searchString) . '%';
 
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM types_statistics WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
+            SELECT title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
         ');
+
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
 

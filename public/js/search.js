@@ -31,25 +31,45 @@ function loadTypes(types) {
         console.log(type);
         createType(type);
     });
+    reload_js("/public/js/statistics.js");
 }
 
 function createType(type) {
     const template = document.querySelector("#type-template");
     const clone = template.content.cloneNode(true);
 
-    const div = clone.querySelector("div");
-    div.id = type.id;
+    const typeWrapper = clone.querySelector(".js-type-wrapper");
+    typeWrapper.id = type.id;
 
-    const image = clone.querySelector("img");
-    image.src = `/public/uploads/${type.image}`;
-    const title = clone.querySelector("h2");
-    title.innerHTML = type.title;
-    const description = clone.querySelector("p");
-    description.innerHTML = type.description;
+    const typeImageWrapper = clone.querySelector(".js-type-image-wrapper");
+    typeImageWrapper.href = `/type/${type.id}`;
+
+    const typeImage = clone.querySelector(".js-type-image");
+    typeImage.src = `/public/uploads/${type.image}`;
+
+    const typeHrefTitle = clone.querySelector(".js-type-href-title");
+    typeHrefTitle.href = `/type/${type.id}`;
+
+    const typeTitle = clone.querySelector(".js-type-title");
+    typeTitle.innerHTML = type.title;
+
+    const typeDescription = clone.querySelector(".js-type-description");
+    typeDescription.innerHTML = type.description;
+
     const like = clone.querySelector(".js-like-content");
     like.textContent = type.likes;
+
     const dislike = clone.querySelector(".js-dislike-content");
     dislike.textContent = type.dislikes;
+
+    if(type.isliked){
+        const likeButton = clone.querySelector(".js-like-button");
+        likeButton.classList.add("type-social-icon");
+    }
+    if(type.isliked === false){
+        const dislikeButton = clone.querySelector(".js-dislike-button");
+        dislikeButton.classList.add('type-social-icon');
+    }
 
     typeContainer.appendChild(clone);
 }

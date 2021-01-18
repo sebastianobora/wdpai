@@ -54,3 +54,11 @@
 .type-social-icon{
     color: #C80A2E;
 }
+
+.fa-heart:hover, .fa-heart-broken:hover{
+    color: #C80A2E;
+    cursor: pointer;
+}
+.fa-heart:active, .fa-heart-broken:active{
+    color: #fa0032;
+}

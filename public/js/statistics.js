@@ -1,6 +1,6 @@
 const types = document.querySelectorAll(".js-type-wrapper");
 
-function setSocialButtonStyle(){
+/*function setSocialButtonStyle(){
     fetch(`/ratedTypeId`).then(function(response){
         return response.json();
     }).then(function(ratedTypes){
@@ -19,7 +19,7 @@ function setSocialButtonStyle(){
             })
         })
     });
-}
+}*/
 
 function updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, value, id){
     const data = {value: value}
@@ -70,4 +70,4 @@ types.forEach(type =>{
     dislikeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, false, id));
 });
 
-setSocialButtonStyle();
+/*setSocialButtonStyle();*/
