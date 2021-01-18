@@ -129,41 +129,46 @@ class TypeRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function like(int $typeId){
+    public function like(int $typeId, $value){
+        $this->removeNullStatistics();
+
         $stmt = $this->database->connect()->prepare('
             INSERT INTO statistics ("like", user_id, type_id) 
-            VALUES (true, :userId, :typeId) 
+            VALUES (:value, :userId, :typeId) 
             ON CONFLICT (user_id, type_id)
             DO UPDATE SET "like" = CASE 
-                WHEN statistics."like" = true 
+                WHEN statistics."like" = :value 
                 THEN null 
-                ELSE true 
+                ELSE :value 
                 END
-            WHERE statistics.user_id = :userId AND statistics.type_id = :typeId; 
+            WHERE statistics.user_id = :userId AND statistics.type_id = :typeId
+            RETURNING statistics."like";
         ');
 
         $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':value', $value, PDO::PARAM_BOOL);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':typeId', $typeId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)['like'];
+    }
+
+    public function removeNullStatistics(){
+        $stmt = $this->database->connect()->prepare('
+        DELETE FROM statistics WHERE "like" is null;
+        ');
         $stmt->execute();
     }
 
-    public function dislike(int $typeId){
+    public function getRatedTypeId(): array
+    {
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO statistics ("like", user_id, type_id) 
-            VALUES (false, :userId, :typeId) 
-            ON CONFLICT (user_id, type_id)
-            DO UPDATE SET "like" = CASE 
-                WHEN statistics."like" = false 
-                THEN null 
-                ELSE false 
-                END
-            WHERE statistics.user_id = :userId AND statistics.type_id = :typeId; 
+            SELECT "like", type_id FROM statistics WHERE user_id = :userId
         ');
-
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':typeId', $typeId, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

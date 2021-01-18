@@ -10,8 +10,6 @@ class Type
     private $image;
     private $category;
 
-    // zrobić po swojemu
-
     private $likes;
     private $dislikes;
     private $id;
@@ -31,7 +29,6 @@ class Type
     {
         return $this->title;
     }
-
 
     public function getCategory()
     {

@@ -18,8 +18,9 @@ Routing::post('login','SecurityController');
 Routing::post('register', 'SecurityController');
 Routing::get('logout', 'SecurityController');
 
-Routing::get('like', 'TypeController');
-Routing::get('dislike', 'TypeController');
+Routing::post('like', 'TypeController');
+
+Routing::get('ratedTypeId', 'TypeController');
 
 
 Routing::post('addType','TypeController');
