@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
     <script src="https://kit.fontawesome.com/45d61cfa33.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/public/js/statistics.js" defer></script>
     <title>TYPES</title>
 </head>
 
@@ -19,7 +20,7 @@
                 <section class="js-types types-wrapper">
                     <?php foreach($types as $type): ?>
 
-                    <div class="type-wrapper" id="<?= $type->getId(); ?>">
+                    <div class="type-wrapper js-type-wrapper" id="<?= $type->getId(); ?>">
                         <a class="type-image-wrapper" href="/type/<?=$type->getId() ?>">
                             <img class="type-image" src="/public/uploads/<?= $type->getImage(); ?>">
                         </a>
@@ -30,13 +31,13 @@
                             <p><?= $type->getDescription(); ?></p>
                             <div class="type-social">
                                 <div class="like">
-                                    <i class="fas fa-heart"></i>
-                                    <span><?= $type->getLike(); ?></span>
+                                    <i class="fas fa-heart js-like-button"></i>
+                                    <span class="js-like-content"><?= $type->getLikes(); ?></span>
                                 </div>
 
                                 <div class="dislike">
-                                    <i class="fas fa-heart-broken"></i>
-                                    <span><?= $type->getDislike(); ?></span>
+                                    <i class="fas fa-heart-broken js-dislike-button"></i>
+                                    <span class="js-dislike-content"><?= $type->getDislikes(); ?></span>
                                 </div>
 
                             </div>
@@ -58,14 +59,14 @@
             <p>description</p>
             <div class="type-social">
 
-                <div>
-                    <i class="fas fa-heart"></i>
-                    <span class="js-like">0</span>
+                <div class="like">
+                    <i class="fas fa-heart js-like-button"></i>
+                    <span class="js-like-content">0</span>
                 </div>
 
-                <div>
-                    <i class="fas fa-heart-broken"></i>
-                    <span class="js-dislike">0</span>
+                <div class="dislike">
+                    <i class="fas fa-heart-broken js-dislike-button"></i>
+                    <span class="js-dislike-content">0</span>
                 </div>
 
             </div>

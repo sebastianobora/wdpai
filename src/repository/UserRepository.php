@@ -26,6 +26,14 @@ class UserRepository extends Repository
         );
     }
 
+    public function getUserIdByUsername($username){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT users.id FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE username = :username'
+        );
+        $stmt->execute([$username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
     public function getUserId(){
         $stmt = $this->database->connect()->prepare('
         SELECT id FROM public.users WHERE cookie = :cookie');

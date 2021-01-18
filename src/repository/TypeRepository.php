@@ -30,11 +30,10 @@ class TypeRepository extends Repository
         ]);
     }
 
-    public function getUserTypes(){
+    public function getUserTypes($userId){
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types WHERE id_users = :id');
-        $userId = $this->userRepository->getUserId();
+        SELECT * FROM types_statistics WHERE id_users = :id');
 
         $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
         $stmt-> execute();
@@ -46,8 +45,8 @@ class TypeRepository extends Repository
                 $type['description'],
                 $type['image'],
                 $type['category'],
-                $type['like'],
-                $type['dislike'],
+                $type['likes'],
+                $type['dislikes'],
                 $type['id']
             );
         }
@@ -56,7 +55,7 @@ class TypeRepository extends Repository
 
     public function getTypeById($id){
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types WHERE id = :id');
+        SELECT * FROM types_statistics WHERE id = :id');
         $stmt->bindParam(':id',$id, PDO::PARAM_STR);
         $stmt-> execute();
         $type = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -65,8 +64,8 @@ class TypeRepository extends Repository
                 $type['description'],
                 $type['image'],
                 $type['category'],
-                $type['like'],
-                $type['dislike'],
+                $type['likes'],
+                $type['dislikes'],
                 $type['id']);
     }
 
@@ -74,7 +73,7 @@ class TypeRepository extends Repository
     {
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types
+        SELECT * FROM types_statistics
         ');
         $stmt->execute();
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -85,8 +84,8 @@ class TypeRepository extends Repository
                 $type['description'],
                 $type['image'],
                 $type['category'],
-                $type['like'],
-                $type['dislike'],
+                $type['likes'],
+                $type['dislikes'],
                 $type['id']
             );
         }
@@ -97,7 +96,7 @@ class TypeRepository extends Repository
     {
         $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM types WHERE LOWER(category) = :category');
+        SELECT * FROM types_statistics WHERE LOWER(category) = :category');
 
         $stmt->bindParam(':category', $categoryString, PDO::PARAM_STR);
         $stmt-> execute();
@@ -109,8 +108,8 @@ class TypeRepository extends Repository
                 $type['description'],
                 $type['image'],
                 $type['category'],
-                $type['like'],
-                $type['dislike'],
+                $type['likes'],
+                $type['dislikes'],
                 $type['id']
             );
         }
@@ -122,7 +121,7 @@ class TypeRepository extends Repository
         $searchString = '%' . strtolower($searchString) . '%';
 
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM types WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
+            SELECT * FROM types_statistics WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
         ');
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
@@ -130,19 +129,41 @@ class TypeRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function like(int $id){
+    public function like(int $typeId){
         $stmt = $this->database->connect()->prepare('
-            UPDATE types SET "like" = "like" + 1 WHERE id = :id
+            INSERT INTO statistics ("like", user_id, type_id) 
+            VALUES (true, :userId, :typeId) 
+            ON CONFLICT (user_id, type_id)
+            DO UPDATE SET "like" = CASE 
+                WHEN statistics."like" = true 
+                THEN null 
+                ELSE true 
+                END
+            WHERE statistics.user_id = :userId AND statistics.type_id = :typeId; 
         ');
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':typeId', $typeId, PDO::PARAM_INT);
         $stmt->execute();
     }
 
-    public function dislike(int $id){
+    public function dislike(int $typeId){
         $stmt = $this->database->connect()->prepare('
-            UPDATE types SET dislike = dislike + 1 WHERE id = :id
+            INSERT INTO statistics ("like", user_id, type_id) 
+            VALUES (false, :userId, :typeId) 
+            ON CONFLICT (user_id, type_id)
+            DO UPDATE SET "like" = CASE 
+                WHEN statistics."like" = false 
+                THEN null 
+                ELSE false 
+                END
+            WHERE statistics.user_id = :userId AND statistics.type_id = :typeId; 
         ');
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':typeId', $typeId, PDO::PARAM_INT);
         $stmt->execute();
     }
 }

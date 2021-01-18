@@ -28,8 +28,9 @@ class TypeController extends AppController{
         $this->userDetails = $this->userDetailsRepository->getUserDetailsByCookie();
     }
 
-    public function myTypes(){
-        $types = $this->typeRepository->getUserTypes();
+    public function userTypes($username){
+        $userId = $this->userRepository->getUserIdByUsername($username);
+        $types = $this->typeRepository->getUserTypes($userId);
         $this->render('types', ['types' => $types, 'userDetails' => $this->userDetails]);
     }
 

@@ -12,18 +12,18 @@ class Type
 
     // zrobić po swojemu
 
-    private $like;
-    private $dislike;
+    private $likes;
+    private $dislikes;
     private $id;
 
-    public function __construct($title, $description, $image, $category, $like = 0, $dislike = 0, $id = null)
+    public function __construct($title, $description, $image, $category, $likes = 0, $dislikes = 0, $id = null)
     {
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
         $this->category = $category;
-        $this->like = $like;
-        $this->dislike = $dislike;
+        $this->likes = $likes;
+        $this->dislikes = $dislikes;
         $this->id = $id;
     }
 
@@ -48,14 +48,14 @@ class Type
         return $this->image;
     }
 
-    public function getLike(): int
+    public function getLikes(): int
     {
-        return $this->like;
+        return $this->likes;
     }
 
-    public function getDislike(): int
+    public function getDislikes(): int
     {
-        return $this->dislike;
+        return $this->dislikes;
     }
 
     public function getId()

@@ -12,7 +12,7 @@ Routing::get('user', 'UserController');
 
 Routing::get('type', 'TypeController');
 Routing::get('types','TypeController');
-Routing::get('myTypes', 'TypeController');
+Routing::get('userTypes', 'TypeController');
 
 Routing::post('login','SecurityController');
 Routing::post('register', 'SecurityController');

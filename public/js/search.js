@@ -46,10 +46,10 @@ function createType(type) {
     title.innerHTML = type.title;
     const description = clone.querySelector("p");
     description.innerHTML = type.description;
-    const like = clone.querySelector(".js-like");
-    like.textContent = type.like;
-    const dislike = clone.querySelector(".js-dislike");
-    dislike.textContent = type.dislike;
+    const like = clone.querySelector(".js-like-content");
+    like.textContent = type.likes;
+    const dislike = clone.querySelector(".js-dislike-content");
+    dislike.textContent = type.dislikes;
 
     typeContainer.appendChild(clone);
 }

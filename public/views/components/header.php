@@ -24,7 +24,7 @@
 
         <div class="avatar-dropdown-content js-avatar-dropdown-content">
             <a class="avatar-dropdown-href" href="/user/<?= $userDetails->getUsername(); ?>">My profile</a>
-            <a class="avatar-dropdown-href" href="/myTypes">My types</a>
+            <a class="avatar-dropdown-href" href="/userTypes/<?= $userDetails->getUsername(); ?>">My types</a>
             <a class="avatar-dropdown-href" href="/logout">Logout</a>
         </div>
     </div>
