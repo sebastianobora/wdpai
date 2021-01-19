@@ -1,26 +1,5 @@
 const types = document.querySelectorAll(".js-type-wrapper");
 
-/*function setSocialButtonStyle(){
-    fetch(`/ratedTypeId`).then(function(response){
-        return response.json();
-    }).then(function(ratedTypes){
-        types.forEach(type =>{
-            const id = type.getAttribute("id");
-            ratedTypes.forEach(ratedType => {
-                if (ratedType.type_id === parseInt(id)) {
-                    if (ratedType.like) {
-                        const likeButton = type.querySelector(".js-like-button");
-                        likeButton.classList.add('type-social-icon');
-                    } else if(ratedType.like === false){
-                        const dislikeButton = type.querySelector(".js-dislike-button");
-                        dislikeButton.classList.add('type-social-icon')
-                    }
-                }
-            })
-        })
-    });
-}*/
-
 function updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, value, id){
     const data = {value: value}
     fetch(`/like/${id}`, {
@@ -69,5 +48,3 @@ types.forEach(type =>{
     likeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, true, id));
     dislikeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, false, id));
 });
-
-/*setSocialButtonStyle();*/

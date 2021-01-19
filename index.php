@@ -13,6 +13,7 @@ Routing::get('user', 'UserController');
 Routing::get('type', 'TypeController');
 Routing::get('types','TypeController');
 Routing::get('userTypes', 'TypeController');
+Routing::get('favoriteTypes', 'TypeController');
 
 Routing::post('login','SecurityController');
 Routing::post('register', 'SecurityController');
@@ -25,8 +26,6 @@ Routing::get('ratedTypeId', 'TypeController');
 
 Routing::post('addType','TypeController');
 Routing::post('search', 'TypeController');
-
-/*Routing::post('usernameExist', 'UserController');*/
 
 Routing::run($path);
 ?>

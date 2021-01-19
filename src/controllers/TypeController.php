@@ -34,6 +34,12 @@ class TypeController extends AppController{
         $this->render('types', ['types' => $types, 'userDetails' => $this->userDetails]);
     }
 
+    public function favoriteTypes($username){
+        $userId = $this->userRepository->getUserIdByUsername($username);
+        $types = $this->typeRepository->getFavoriteTypes($userId);
+        $this->render('types', ['types' => $types, 'userDetails' => $this->userDetails]);
+    }
+
     public function type($id){
         $type = $this->typeRepository->getTypeById($id);
         $this->render('type', ['type' => $type, 'userDetails' => $this->userDetails]);
@@ -63,28 +69,28 @@ class TypeController extends AppController{
         }
     }
 
-    public function ratedTypeId(){
-        http_response_code(200);
-        echo json_encode($this->typeRepository->getRatedTypeId());
-    }
-
     public function addType(){
 
         # file ustailiśmy w widoku name ='file'
         if($this->isPost() && $this->validate($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])){
+            $fileExtension = explode(".", $_FILES['file']['name']);
+            $fileExtension = ".".$fileExtension[sizeof($fileExtension) - 1];
+
+            $name = uniqid("img-");
             move_uploaded_file(
                 $_FILES['file']['tmp_name'],
-                dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['file']['name']
+                dirname(__DIR__).self::UPLOAD_DIRECTORY.$name.$fileExtension
+                //dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['file']['name']
             ); # łączymy w drugim argumencie ścieżkę do katalogu + ścieżka docelowa pliku + nzwa pliku
 
-            $type = new Type($_POST['title'], $_POST['description'], $_FILES['file']['name'], $_POST['category']);
+            $type = new Type($_POST['title'], $_POST['description'], $name.$fileExtension, $_POST['category']);
             $this->typeRepository->addType($type);
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("location: {$url}/types");
         }
 
-        return $this ->render("add-types", ['messages' => $this->message, 'userDetails' => $this->userDetails]);
+        return $this ->render("add-types", ['messages' => $this->message, 'userDetails' => $this->userDetails, 'categories' => Type::$categories]);
     }
 
 
