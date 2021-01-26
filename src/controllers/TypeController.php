@@ -2,9 +2,11 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'/../models/Type.php';
+require_once __DIR__.'/../models/Comment.php';
 require_once __DIR__.'/../repository/TypeRepository.php';
 require_once __DIR__.'/../repository/UserRepository.php';
 require_once __DIR__.'/../repository/UserDetailsRepository.php';
+require_once __DIR__.'/../repository/CommentRepository.php';
 
 class TypeController extends AppController{
     const MAX_FILE_SIZE = 1024*1024;
@@ -15,6 +17,7 @@ class TypeController extends AppController{
     private $typeRepository;
     private $userRepository;
     private $userDetailsRepository;
+    private $commentRepository;
 
     private $userDetails;
 
@@ -24,6 +27,7 @@ class TypeController extends AppController{
         $this->typeRepository = new TypeRepository();
         $this->userRepository = new UserRepository();
         $this->userDetailsRepository = new UserDetailsRepository();
+        $this->commentRepository = new CommentRepository();
 
         $this->userDetails = $this->userDetailsRepository->getUserDetailsByCookie();
     }
@@ -40,9 +44,10 @@ class TypeController extends AppController{
         $this->render('types', ['types' => $types, 'userDetails' => $this->userDetails]);
     }
 
-    public function type($id){
-        $type = $this->typeRepository->getTypeById($id);
-        $this->render('type', ['type' => $type, 'userDetails' => $this->userDetails]);
+    public function type($typeId){
+        $type = $this->typeRepository->getTypeById($typeId);
+        $comments = $this->commentRepository->getComments($typeId);
+        $this->render('type', ['type' => $type, 'userDetails' => $this->userDetails, 'comments' => $comments]);
     }
 
     public function types($category){
@@ -119,5 +124,38 @@ class TypeController extends AppController{
 
             echo json_encode($this->typeRepository->like($id, $decoded['value']));
         }
+    }
+
+    public function addComment(){
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            $userId = $this->userRepository->getUserId();
+            $comment = new Comment($userId, $decoded['typeId'], $decoded['message']);
+            $this->commentRepository->addComment($comment);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+
+            $comments = $this->commentRepository->getComments($decoded['typeId']);
+
+            $commentsAssocTable = [];
+            foreach ($comments as $c) {
+                    $commentsAssocTable[] =
+                        [
+                            'id' => $c->getId(),
+                            'userId' => $c->getUserId(),
+                            'typeId' => $c->getTypeId(),
+                            'message' => $c->getMessage(),
+                            'date' => $c->getDate(),
+                            'avatar' => $c->getUserDetails()->getImage(),
+                            'username' => $c->getUserDetails()->getUsername()
+                        ];
+                }
+            }
+            echo json_encode($commentsAssocTable);
     }
 }

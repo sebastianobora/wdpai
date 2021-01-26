@@ -25,5 +25,4 @@ class UserController extends AppController{
         $fetchedUserDetails = $this->userDetailsRepository->getUserDetailsByUsername($username);
         $this->render('user', ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails]);
     }
-
 }

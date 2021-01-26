@@ -37,5 +37,5 @@
 </body>
 
 <?php
-include 'templates/type-template.php';
+    include 'templates/type-template.php';
 ?>
