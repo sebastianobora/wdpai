@@ -7,35 +7,3 @@
     width: 100%;
     height: auto;
 }
-
-.type-details-comments-textarea{
-    width: 400px;
-    height: 80px;
-    background-color: #FFFFFF;
-    resize: none;
-}
-
-.type-details-comment-head{
-    display: flex;
-    flex-direction: column;
-    margin-left: 1em;
-    margin-right: 1em;
-}
-
-.type-details-comment-content{
-    background-color: #FFFFFF;
-    margin: 20px 5px 20px 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.type-details-comment-wrapper{
-    display: flex;
-    flex-direction: row;
-}
-
-.type-details-comment-content-wrapper{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
