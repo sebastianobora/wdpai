@@ -29,6 +29,29 @@ class UserDetailsRepository extends Repository
         );
     }
 
+    public function getUserDetailsByUserId($userId): ?UserDetails
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE users.id = :userId
+        ');
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+
+        $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userDetails == false) {
+            return null;
+        }
+
+        return new UserDetails(
+            $userDetails['username'],
+            $userDetails['image'],
+            $userDetails['name'],
+            $userDetails['surname'],
+            $userDetails['phone']
+        );
+    }
+
     public function createUserDetails($username){
         $stmt = $this->database->connect()->prepare('
         INSERT INTO users_details (image, username) VALUES (?, ?) RETURNING id;

@@ -28,10 +28,8 @@ function fetchTypes(input, data){
 
 function loadTypes(types) {
     types.forEach(type => {
-        console.log(type);
         createType(type);
     });
-
 }
 
 function createType(type) {

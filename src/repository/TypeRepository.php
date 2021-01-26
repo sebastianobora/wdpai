@@ -13,6 +13,8 @@ class TypeRepository extends Repository
         $this->userRepository = new UserRepository();
     }
 
+
+
     public function addType(Type $type): void
     {
         $date = new DateTime();
