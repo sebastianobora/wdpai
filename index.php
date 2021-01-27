@@ -26,7 +26,10 @@ Routing::get('ratedTypeId', 'TypeController');
 
 Routing::post('addType','TypeController');
 Routing::post('search', 'TypeController');
-Routing::post('addComment', 'TypeController');
+
+Routing::post('addComment', 'CommentController');
+Routing::post('removeComment', 'CommentController');
+Routing::post('editComment', 'CommentController');
 
 Routing::run($path);
 ?>

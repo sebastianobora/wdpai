@@ -47,7 +47,7 @@
                         <div class="js-comments-wrapper type-details-comments-wrapper">
                             <?php if($comments){
                             foreach($comments as $comment): ?>
-                            <div class="type-details-comment-wrapper">
+                            <div class="type-details-comment-wrapper js-comment-wrapper" id="comment_<?=$comment->getId();?>">
                                 <div class="type-details-comment-head">
                                     <div class="avatar">
                                         <a href="/user/<?=$comment->getUserDetails()->getUsername()?>">
@@ -61,9 +61,13 @@
 
                                 <div class="type-details-comment-content-wrapper">
                                     <div class="type-details-comment-content">
-                                        <p><?= $comment->getMessage(); ?></p>
+                                        <span class="js-comment-message" contenteditable="false"><?=$comment->getMessage(); ?></span>
                                     </div>
-                                    <p><?= $comment->getDate(); ?></p>
+                                    <p><?= $comment->getDate();?></p>
+                                    <?php if($comment->getUserDetails()->getUsername() == $userDetails->getUsername()){?>
+                                        <button class="js-comment-edit-button" onclick=editComment(<?=$comment->getId()?>)>Edit</button>
+                                        <button class="js-comment-remove-button" onclick=removeComment(<?=$comment->getId()?>)>Remove</button>
+                                    <?php }?>
                                 </div>
                             </div>
                             <?php endforeach; } ?>
@@ -94,9 +98,11 @@
 
         <div class="type-details-comment-content-wrapper">
             <div class="type-details-comment-content">
-                <p class="js-comment-message"></p>
+                <span class="js-comment-message" contenteditable="false"></span>
             </div>
             <p class="js-comment-date"></p>
+            <button class="js-comment-edit-button"></button>
+            <button class="js-comment-remove-button"></button>
         </div>
     </div>
 </template>

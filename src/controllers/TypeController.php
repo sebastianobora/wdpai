@@ -135,27 +135,23 @@ class TypeController extends AppController{
 
             $userId = $this->userRepository->getUserId();
             $comment = new Comment($userId, $decoded['typeId'], $decoded['message']);
-            $this->commentRepository->addComment($comment);
+            $commentId = $this->commentRepository->addComment($comment);
 
             header('Content-Type: application/json');
             http_response_code(200);
 
-            $comments = $this->commentRepository->getComments($decoded['typeId']);
+            $newComment = $this->commentRepository->getCommentById($commentId);
 
-            $commentsAssocTable = [];
-            foreach ($comments as $c) {
-                    $commentsAssocTable[] =
-                        [
-                            'id' => $c->getId(),
-                            'userId' => $c->getUserId(),
-                            'typeId' => $c->getTypeId(),
-                            'message' => $c->getMessage(),
-                            'date' => $c->getDate(),
-                            'avatar' => $c->getUserDetails()->getImage(),
-                            'username' => $c->getUserDetails()->getUsername()
-                        ];
-                }
+            echo json_encode(
+                [
+                    'id' => $newComment->getId(),
+                    'userId' => $newComment->getUserId(),
+                    'typeId' => $newComment->getTypeId(),
+                    'message' => $newComment->getMessage(),
+                    'date' => $newComment->getDate(),
+                    'avatar' => $newComment->getUserDetails()->getImage(),
+                    'username' => $newComment->getUserDetails()->getUsername()
+                ]);
             }
-            echo json_encode($commentsAssocTable);
     }
 }

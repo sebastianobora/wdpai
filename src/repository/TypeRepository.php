@@ -18,6 +18,7 @@ class TypeRepository extends Repository
     public function addType(Type $type): void
     {
         $date = new DateTime();
+        $date->setTimezone(new DateTimeZone('Europe/Warsaw'));
         $stmt = $this->database->connect()->prepare('
         INSERT INTO types (title, description, created_at, image, id_users, category)
         VALUES (?, ?, ?, ?, ?, ?)');

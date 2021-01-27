@@ -16,6 +16,7 @@ class CommentRepository extends Repository
 
     public function addComment($comment){
         $date = new DateTime();
+        $date->setTimezone(new DateTimeZone('Europe/Warsaw'));
         $stmt = $this->database->connect()->prepare('
         INSERT INTO comments (user_id, type_id, date, message, answer_to)
         VALUES (?, ?, ?, ?, ?) RETURNING id');
@@ -27,6 +28,16 @@ class CommentRepository extends Repository
             $comment->getMessage(),
             $comment->getAnswerTo()
         ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
+    public function getCommentById($id){
+        $stmt = $this->database->connect()->prepare('
+        SELECT * FROM comments WHERE id = :id');
+        $stmt->bindParam(':id',$id, PDO::PARAM_INT);
+        $stmt-> execute();
+        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->commentMapper($comments)[0];
     }
 
 
@@ -55,5 +66,24 @@ class CommentRepository extends Repository
             }
         }
         return $result;
+    }
+
+    public function removeCommentById($id)
+    {
+        $stmt = $this->database->connect()->prepare('
+        DELETE FROM comments WHERE id = :id;
+        ');
+        $stmt->bindParam(':id',$id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function editCommentById($message, $id)
+    {
+        $stmt = $this->database->connect()->prepare('
+        UPDATE comments SET message = :message WHERE id = :id;
+        ');
+        $stmt->bindParam(':id',$id, PDO::PARAM_INT);
+        $stmt->bindParam(':message',$message);
+        $stmt->execute();
     }
 }
