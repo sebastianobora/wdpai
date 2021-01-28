@@ -39,3 +39,12 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.type-author-href:link,
+.type-author-href:visited{
+    color: black;
+}
+
+.type-author-href:active{
+    color: darkred;
+}

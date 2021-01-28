@@ -11,7 +11,6 @@ function updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton
     }).then(function(response){
         return response.json();
     }).then(function(likeState){
-        console.log(likeState);
         if(value){
             // like button set
             setButtonsStyle(likeButton, dislikeButton, likeContent, dislikeContent, likeState, value);

@@ -2,6 +2,10 @@
 
 class AppController {
 
+    const MAX_FILE_SIZE = 1024*1024;
+    const SUPPORTED_TYPES = ['image/png', "image/jpeg"];
+    const UPLOAD_DIRECTORY = '/../public/uploads/';
+
     private $request;
 
     public function __construct()
@@ -17,7 +21,6 @@ class AppController {
         return $this->request === 'GET';
     }
 
-
     protected function render(string $template = null, array $variables = []){
         $templatePath = 'public/views/'.$template.'.php';
         $output = 'File not found';
@@ -25,11 +28,33 @@ class AppController {
         if(file_exists($templatePath)) {
             extract($variables);
 
-            ob_start(); # otwiera zapis bufora
-            include $templatePath; # wczytujemy ścieżkę do pliku html do bufora
-            $output = ob_get_clean(); # do zmiennej output przypisujemy to co jest w buforze
+            ob_start();
+            include $templatePath;
+            $output = ob_get_clean();
         }
         print($output);
+    }
+
+    protected function prepareFile($file){
+        $fileExtension = explode(".", $file['name']);
+        $fileExtension = ".".$fileExtension[sizeof($fileExtension) - 1];
+
+        $name = uniqid("img-");
+        move_uploaded_file(
+            $file['tmp_name'],
+            dirname(__DIR__).self::UPLOAD_DIRECTORY.$name.$fileExtension
+        );
+        return $name.$fileExtension;
+    }
+
+    protected function validateFile(array $file): bool{
+        if($file['size'] > self::MAX_FILE_SIZE){
+            return false;
+        }
+        if(!isset($file['type']) && !in_array($file['type'], self::SUPPORTED_TYPES)){
+            return false;
+        }
+        return true;
     }
 }
 

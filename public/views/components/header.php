@@ -16,11 +16,9 @@
 
     <div class="avatar-dropdown">
 
-        <div class="avatar">
-            <a onclick="dropdown()">
-                <img src="/public/uploads/<?= $userDetails->getImage(); ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
-            </a>
-        </div>
+        <a onclick="dropdown()">
+            <img src="/public/uploads/<?= $userDetails->getImage(); ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
+        </a>
 
         <div class="avatar-dropdown-content js-avatar-dropdown-content">
             <a class="avatar-dropdown-href" href="/user/<?= $userDetails->getUsername(); ?>">My profile</a>

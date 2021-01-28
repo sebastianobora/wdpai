@@ -6,7 +6,7 @@ require_once __DIR__."/../models/UserDetails.php";
 
 class UserDetailsRepository extends Repository
 {
-    public function getUserDetailsByUsername(string $username): ?UserDetails
+    public function getUserDetailsByUsername($username): ?UserDetails
     {
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users_details WHERE username = :username
@@ -68,5 +68,18 @@ class UserDetailsRepository extends Repository
         $stmt->execute([$_COOKIE['user']]);
         $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
         return new UserDetails($userDetails['username'], $userDetails['image']);
+    }
+
+    public function updateUserDetailsField($field, $value, $username)
+    {
+        if($value == ""){
+            $value = null;
+        }
+        $stmt = $this->database->connect()->prepare("
+        UPDATE users_details SET $field = :value WHERE username = :username
+        ");
+        $stmt->bindParam(':value',$value);
+        $stmt->bindParam(':username',$username);
+        $stmt->execute();
     }
 }

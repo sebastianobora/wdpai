@@ -13,8 +13,6 @@ class TypeRepository extends Repository
         $this->userRepository = new UserRepository();
     }
 
-
-
     public function addType(Type $type): void
     {
         $date = new DateTime();
@@ -33,6 +31,22 @@ class TypeRepository extends Repository
         ]);
     }
 
+    public function getTypeById($id)
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT id_users, created_at, title, description, image, category, likes, dislikes, ts.id,
+       (SELECT "like" FROM statistics WHERE user_id = :userId AND type_id = ts.id) isliked FROM types_statistics ts WHERE id = :id');
+        $userId = $this->userRepository->getUserId();
+        $stmt->bindParam(':userId',$userId, PDO::PARAM_INT);
+        $stmt->bindParam(':id',$id, PDO::PARAM_INT);
+        $stmt-> execute();
+        $type = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($type == false) {
+            return null;
+        }
+        return $this->typeMapper([$type])[0];
+    }
+
     public function getUserTypes($Id): array
     {
         $stmt = $this->database->connect()->prepare('
@@ -48,38 +62,23 @@ class TypeRepository extends Repository
         return $this->typeMapper($types);
     }
 
-    public function getTypeById($id): Type
-    {
-        $stmt = $this->database->connect()->prepare('
-        SELECT title, description, image, category, likes, dislikes, ts.id,
-       (SELECT "like" FROM statistics WHERE user_id = :userId AND type_id = ts.id) isliked FROM types_statistics ts WHERE id = :id');
-        $userId = $this->userRepository->getUserId();
-        $stmt->bindParam(':userId',$userId, PDO::PARAM_INT);
-        $stmt->bindParam(':id',$id, PDO::PARAM_INT);
-        $stmt-> execute();
-        $type = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $this->typeMapper([$type])[0];
-    }
-
     public function getTypes(): array
     {
         $stmt = $this->database->connect()->prepare('
-        SELECT title, description, image, category, likes, dislikes, ts.id,
+        SELECT title, description, image, category, id_users, created_at, likes, dislikes, ts.id,
        (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts');
 
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
-
         $stmt->execute();
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         return $this->typeMapper($types);
     }
 
     public function getTypeByCategory($categoryString): array
     {
         $stmt = $this->database->connect()->prepare('
-        SELECT title, description, image, category, likes, dislikes, ts.id,
+        SELECT title, description, image, category, id_users, created_at, likes, dislikes, ts.id,
        (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked 
         FROM types_statistics ts WHERE LOWER(category) = :category');
 
@@ -93,7 +92,7 @@ class TypeRepository extends Repository
         return $this->typeMapper($types);
     }
 
-    public function getTypeByTitle(string $searchString): array
+    public function getTypeByTitle($searchString): array
     {
         $searchString = '%' . strtolower($searchString) . '%';
 
@@ -131,7 +130,6 @@ class TypeRepository extends Repository
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':typeId', $typeId, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetch(PDO::FETCH_ASSOC)['like'];
     }
 
@@ -145,7 +143,7 @@ class TypeRepository extends Repository
     public function getFavoriteTypes($userId): array
     {
         $stmt = $this->database->connect()->prepare('
-        SELECT title, description, image, category,
+        SELECT title, description, image, category, id_users, created_at,
        (SELECT count(*)
         FROM types t JOIN statistics s ON t.id = s.type_id
         WHERE s."like" = true AND s.type_id = types.id) likes,
@@ -158,7 +156,6 @@ class TypeRepository extends Repository
 
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
-
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $this->typeMapper($types);
     }
@@ -175,10 +172,11 @@ class TypeRepository extends Repository
                 $type['likes'],
                 $type['dislikes'],
                 $type['id'],
-                $type['isliked']
+                $type['isliked'],
+                $type['id_users'],
+                $type['created_at']
             );
         }
         return $result;
     }
-
 }

@@ -26,12 +26,27 @@ class UserRepository extends Repository
         );
     }
 
-    public function getUserIdByUsername($username){
+    public function changePassword($value, $id){
+        $stmt = $this->database->connect()->prepare("
+        UPDATE users SET password = :value WHERE id = :id
+       ");
+        $stmt->bindParam(':value',$value);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+    }
+
+    public function getUserByUsername($username){
         $stmt = $this->database->connect()->prepare(
-            'SELECT users.id FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE username = :username'
+            'SELECT users.id, email, password, username FROM users JOIN users_details ON users.id_users_details = users_details.id WHERE username = :username'
         );
         $stmt->execute([$username]);
-        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+        $user =  $stmt->fetch(PDO::FETCH_ASSOC);
+        return new User(
+            $user['email'],
+            $user['password'],
+            $user['username'],
+            $user['id']
+        );
     }
 
     public function getUserId(){

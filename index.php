@@ -9,6 +9,7 @@ Routing::get('', 'DefaultController');
 Routing::get('index','DefaultController');
 
 Routing::get('user', 'UserController');
+Routing::get('editUser', 'UserController');
 
 Routing::get('type', 'TypeController');
 Routing::get('types','TypeController');

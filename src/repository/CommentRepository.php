@@ -43,7 +43,7 @@ class CommentRepository extends Repository
 
     public function getComments($typeId){
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM comments WHERE type_id = :typeId');
+        SELECT * FROM comments WHERE type_id = :typeId ORDER BY date');
         $stmt->bindParam(':typeId',$typeId, PDO::PARAM_INT);
         $stmt-> execute();
         $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);

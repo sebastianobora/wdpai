@@ -29,16 +29,11 @@ class SecurityController extends AppController{
             return $this->render('login', ['messages' => ["User with this email not exist!"]]);
         }
 
-        if($user -> getEmail() !== $email ){
-            return $this->render('login', ['messages' => ["User with this email not exist!"]]);
-        }
-        //TODO: to u góry chyba już można usunąć
-        if($user -> getPassword() !== md5($password)){
+        if($user -> getPassword() !== hash('sha256', $password)){
             return $this->render('login', ['messages' => ["Wrong password!"]]);
         }
 
-        //return $this->render('types');
-        $cookieValue = md5($user->getEmail());
+        $cookieValue = hash('sha256', $user->getEmail());
         setcookie("user", $cookieValue , time() + (86400));
         $this-> userRepository->setCookie($cookieValue, $user->getEmail());
 
@@ -78,7 +73,7 @@ class SecurityController extends AppController{
             return $this->render('register', ['messages' => ["Passwords do not match!"]]);
         }
 
-        $user = new User($email, md5($password), $username);
+        $user = new User($email, hash('sha256', $password), $username);
         $detailsId = $this->userDetailsRepository->createUserDetails($user->getUsername());
         $this->userRepository->addUser($user, $detailsId);
 

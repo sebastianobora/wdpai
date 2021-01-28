@@ -23,6 +23,10 @@
                     <div class="user-details">
                         <img class="user-details-avatar" src="/public/uploads/<?= $fetchedUserDetails->getImage(); ?>">
                         <div class="user-details-content">
+                            <?php if($fetchedUserDetails->getUsername() == $userDetails->getUsername()){?>
+                                <a href="/editUser/<?=$fetchedUserDetails->getUsername();?>" >Edit profile</a>
+                                <a href="/editUser/<?=$fetchedUserDetails->getUsername();?>" >Delete profile</a>
+                            <?php }?>
                             <h1><?= $fetchedUserDetails->getUsername(); ?></h1>
                             <p><?= $fetchedUserDetails->getName(); ?></p>
                             <p><?= $fetchedUserDetails->getSurname(); ?></p>

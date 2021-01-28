@@ -9,13 +9,15 @@ class Type
     private $description;
     private $image;
     private $category;
-
     private $likes;
     private $dislikes;
     private $id;
     private $isLiked;
+    private $idUsers;
+    private $createdAt;
 
-    public function __construct($title, $description, $image, $category, $likes = 0, $dislikes = 0, $id = null, $isLiked = null)
+    public function __construct($title, $description, $image, $category, $likes = 0, $dislikes = 0,
+                                $id = null, $isLiked = null, $idUsers = null, $createdAt = null)
     {
         $this->isLiked = $isLiked;
         $this->title = $title;
@@ -25,6 +27,18 @@ class Type
         $this->likes = $likes;
         $this->dislikes = $dislikes;
         $this->id = $id;
+        $this->idUsers = $idUsers;
+        $this->createdAt = $createdAt;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getIdUsers()
+    {
+        return $this->idUsers;
     }
 
     public function getIsLiked()

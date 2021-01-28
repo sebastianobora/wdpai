@@ -22,12 +22,17 @@ class Routing {
     public static function run($url){
         $urlParts = explode("/", $url);
         $action = $urlParts[0];
+        $arg = $urlParts[1] ?? '';
 
         if(!array_key_exists($action, self::$routes)){
             die('Wrong url!');
         }
 
         $controller = self::$routes[$action];
+
+        $typeRepository = new TypeRepository();
+        $userRepository = new UserRepository();
+        $userDetailsRepository = new UserDetailsRepository();
 
         if(!isset($_COOKIE["user"]) and $action != 'login' and $action != 'register'){
                 $action = 'index';
@@ -39,7 +44,6 @@ class Routing {
         }
 
         if(isset($_COOKIE["user"]) and ($action == 'login' or $action == 'index' or $action == 'register')){
-            $userRepository = new UserRepository();
             if(!$userRepository->getUserByCookie($_COOKIE["user"])){
                 $action = 'index';
                 $controller = 'DefaultController';
@@ -49,18 +53,19 @@ class Routing {
             }
         }
 
-        $arg = $urlParts[1] ?? '';
+        if($action == 'editUser' and $arg and $arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername()){
+            die('You have no access to do it! Wrong url!');
+        }// or is admin
 
         if($action == 'types' and $arg and !in_array($arg, Type::$categories)){
             die('No such category! Wrong url!');
         }
 
-        $typeRepository = new TypeRepository();
         if($action == 'type' and $arg and !$typeRepository->getTypeById($arg)){
             die('No such type! Wrong url!');
         }
 
-        $userDetailsRepository = new UserDetailsRepository();
+
         if($action == 'user' and $arg and !$userDetailsRepository->getUserDetailsByUsername($arg)){
             die('No such user! Wrong url!');
         }

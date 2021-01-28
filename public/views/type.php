@@ -25,7 +25,9 @@
                         <img class="type-details-image" src="/public/uploads/<?= $type->getImage(); ?>">
                         <div class="type-details-content">
                             <h1><?= $type->getTitle(); ?></h1>
+                            <p><?= $type->getCreatedAt(); ?></p>
                             <p><?= $type->getDescription(); ?></p>
+                            <a class="type-author-href" href="/user/<?=$author?>">Author: <?=$author?></a>
                             <div class="type-social">
                                 <div class="like">
                                     <i class="fas fa-heart js-like-button <?php if($type->getIsLiked()){ echo "type-social-icon"; } ?>"></i>
@@ -81,28 +83,5 @@
 
 <?php
     include 'templates/type-template.php';
+    include 'templates/comment-template.php';
 ?>
-
-<template id="comment-wrapper-template">
-    <div id="" class="type-details-comment-wrapper js-comment-wrapper">
-        <div class="type-details-comment-head">
-            <div class="avatar">
-                <a class="js-comment-avatar-href" href="">
-                    <img src="" alt="Avatar" class="js-comment-avatar-image avatar-image img-fluid">
-                </a>
-            </div>
-            <a class="js-comment-username-href" href="">
-                <p class="js-comment-username"></p>
-            </a>
-        </div>
-
-        <div class="type-details-comment-content-wrapper">
-            <div class="type-details-comment-content">
-                <span class="js-comment-message" contenteditable="false"></span>
-            </div>
-            <p class="js-comment-date"></p>
-            <button class="js-comment-edit-button"></button>
-            <button class="js-comment-remove-button"></button>
-        </div>
-    </div>
-</template>

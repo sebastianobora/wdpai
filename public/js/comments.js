@@ -18,7 +18,6 @@ addCommentButton.addEventListener('click', function (event) {
         }).then(function (response) {
             return response.json();
         }).then(function (comment) {
-            console.log(comment);
             loadComment(comment);
         });
     }else{
