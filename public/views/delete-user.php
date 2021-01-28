@@ -23,12 +23,7 @@
                         <form class="user-delete-form" action="/deleteUser" method="POST" ENCTYPE="multipart/form-data">
                             <input class="user-edit-username-input" name="username" type="text" value="<?= $fetchedUserDetails->getUsername(); ?>" readonly>
                             <input class="form-input" name="password" type="password" placeholder="Enter password to confirm">
-                            <?php if(isset($messages)){
-                                foreach ($messages as $message) {
-                                    echo $message;
-                                }
-                            }
-                            ?>
+                            <div class="message"><?php if(isset($messages)){foreach ($messages as $message) {echo $message;}} ?></div>
                             <button type="submit">Remove account</button>
                         </form>
                 </section>

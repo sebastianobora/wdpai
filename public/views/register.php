@@ -17,15 +17,7 @@
 
     <div class="login-container">
         <form class="auth-form" action="register" method="POST">
-            <div class="messages">
-                <?php
-                if(isset($messages)){
-                    foreach($messages as $message) {
-                        echo $message;
-                    }
-                }
-                ?>
-            </div>
+            <div class="message"><?php if(isset($messages)){foreach ($messages as $message) {echo $message;}} ?></div>
             <div class="auth-inputs-wrapper">
                 <input class="form-input js-input-email" name="email" type="text" placeholder="email@email.com">
                 <input class="form-input js-input-username" name="username" type="text" placeholder="username">

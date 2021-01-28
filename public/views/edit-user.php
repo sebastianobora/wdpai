@@ -32,12 +32,7 @@
                         <input class="form-input" name="password" type="password" placeholder="Current password">
                         <input class="form-input" name="newPassword" type="password" placeholder="New password">
                         <input class="form-input" name="confirmNewPassword" type="password" placeholder="Confirm new password">
-                        <?php if(isset($messages)){
-                            foreach ($messages as $message) {
-                                echo $message;
-                            }
-                        }
-                        ?>
+                        <div class="message"><?php if(isset($messages)){foreach ($messages as $message) {echo $message;}} ?></div>
                         <button type="submit">Save changes</button>
                     </form>
                 </section>

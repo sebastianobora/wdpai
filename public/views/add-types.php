@@ -19,14 +19,9 @@
                 <section class="js-types">
 
                     <section class="type-form-wrapper">
-                        <h1>UPLOAD</h1>
-                        <form class="add-type-form" action="addType" method="POST" ENCTYPE="multipart/form-data">
-                            <?php if(isset($messages)){
-                                foreach ($messages as $message) {
-                                    echo $message;
-                                }
-                            }
-                            ?>
+                        <h1 class="page-title">Add new type</h1>
+                        <form class="add-type-form form-center" action="addType" method="POST" ENCTYPE="multipart/form-data">
+                            <div class="message"><?php if(isset($messages)){foreach ($messages as $message) {echo $message;}} ?></div>
                             <select name="category">
                                 <?php foreach ($categories as $category): ?>
                                 <option value=<?=$category ?>><?= $category ?></option>
@@ -35,7 +30,7 @@
                             <input class="form-input" name="title" type="text" placeholder="title">
                             <textarea class="form-input" name="description" rows="5" placeholder="description"></textarea>
                             <input class="form-input" type="file" name="file">
-                            <button type="submit">send</button>
+                            <button class="btn-submit-margin-top" type="submit">send</button>
                         </form>
                     </section>
 

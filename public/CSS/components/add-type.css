@@ -1,4 +1,6 @@
 .type-form-wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,5 +9,4 @@
 .add-type-form {
     display: flex;
     flex-direction: column;
-    width: 30%;
 }
