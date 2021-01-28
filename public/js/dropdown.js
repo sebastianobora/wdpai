@@ -1,5 +1,5 @@
-let content = document.querySelector('.js-avatar-dropdown-content');
-let avatar = document.querySelector('.js-avatar-image');
+const content = document.querySelector('.js-avatar-dropdown-content');
+const avatar = document.querySelector('.js-avatar-image');
 
 function dropdown() {
     if (content.style.display === "none" || content.style.display === "") {
@@ -17,3 +17,15 @@ window.onclick = function(event){
         avatar.classList.remove('avatar-image-shadow');
     }
 }
+
+const navSideToggleSelector = '.js-menu-toggle';
+const $navSide = document.querySelector('.js-nav-side');
+
+document.addEventListener('click', function(event) {
+    if (event.target.matches(navSideToggleSelector)) {
+        event.preventDefault();
+
+        $navSide.classList.toggle('nav-opened');
+    }
+}, false);
+

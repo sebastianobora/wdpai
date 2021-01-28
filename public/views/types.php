@@ -26,9 +26,9 @@
                         </a>
                         <div class="type-content">
                             <a class="type-href-title" href="/type/<?=$type->getId() ?>">
-                                <h2><?= $type->getTitle(); ?></h2>
+                                <h2 class="type-title"><?= $type->getTitle(); ?></h2>
                             </a>
-                            <p><?= $type->getDescription(); ?></p>
+                            <p class="type-description"><?= $type->getDescription(); ?></p>
                             <div class="type-social">
                                 <div class="like">
                                     <i class="fas fa-heart js-like-button <?php if($type->getIsLiked()){ echo "type-social-icon"; } ?>"></i>

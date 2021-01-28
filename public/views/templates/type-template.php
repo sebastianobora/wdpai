@@ -5,9 +5,9 @@
         </a>
         <div class="type-content">
             <a class="type-href-title js-type-href-title" href="">
-                <h2 class="js-type-title"></h2>
+                <h2 class="js-type-title type-title"></h2>
             </a>
-            <p class="js-type-description"></p>
+            <p class="js-type-description type-description"></p>
             <div class="type-social">
                 <div class="like">
                     <i class="fas fa-heart js-like-button"></i>

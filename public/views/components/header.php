@@ -4,6 +4,10 @@
 </head>
 
 <header class="header">
+    <div class="menu-toggle-hamburger-wrapper">
+        <i class="fas fa-bars menu-toggle-hamburger-icon js-menu-toggle"></i>
+    </div>
+
     <div class="search-bar">
         <input class="form-input search-bar-input js-search-bar-input" placeholder="What are you looking for?">
     </div>

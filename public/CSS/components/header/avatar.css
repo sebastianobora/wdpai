@@ -5,6 +5,7 @@
     cursor: pointer;
     width: 40px;
     height: 40px;
+    transition: box-shadow .15s ease-in;
 }
 
 .avatar-image:hover, .avatar-image-shadow{
@@ -14,6 +15,12 @@
 .avatar-dropdown{
     position: relative;
     display:inline-block;
+}
+
+@media all and (max-width: 575.98px){
+    .avatar-dropdown{
+        order: 3;
+    }
 }
 
 .avatar-dropdown-content {
