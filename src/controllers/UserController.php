@@ -23,16 +23,19 @@ class UserController extends AppController{
     }
 
     public function user($username){
+        $admin = $this->userRepository->isAdmin();
         $fetchedUserDetails = $this->userDetailsRepository->getUserDetailsByUsername($username);
-        $this->render('user', ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails]);
+        $this->render('user', ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails, 'admin' => $admin]);
     }
 
     public function editUser($username){
         if($this->isPost()){
             $this->messages = ["Your account details has been updated successfully!"];
             $editedUser = $this->userRepository->getUserByUsername($_POST['username']);
-            $this->accessToEdit($editedUser->getUserId(),$this->currentUser);
-            $this->updateUsersFields($editedUser);
+
+            if($this->accessToEdit($editedUser->getUserId(), $this->currentUser, $this->userRepository->isAdmin())){
+                $this->updateUsersFields($editedUser);
+            }
         }
         if($this->isPost() && $username == ''){
             $username = $_POST['username'];
@@ -67,14 +70,15 @@ class UserController extends AppController{
     public function deleteUser($username){
         if($this->isPost()){
             $deletedUser = $this->userRepository->getUserByUsername($_POST['username']);
-            $this->accessToEdit($deletedUser->getUserId(), $this->currentUser);
-            if(isset($_POST['password']) && hash("sha256",$_POST['password']) == $deletedUser->getPassword()){
-                $this->userDetailsRepository->deleteUserUserDetails($_POST['username']);
-                setcookie("user", "", time() - 3600);
-                $url = "http://$_SERVER[HTTP_HOST]";
-                header("location: {$url}/index");
-            }else{
-                $this->messages = ["Wrong password!"];
+            if($this->accessToEdit($deletedUser->getUserId(), $this->currentUser, $this->userRepository->isAdmin())){
+                if(hash("sha256",$_POST['password']) == $deletedUser->getPassword() or $this->userRepository->isAdmin()){
+                    $this->userDetailsRepository->deleteUserUserDetails($_POST['username']);
+                    setcookie("user", "", time() - 3600);
+                    $url = "http://$_SERVER[HTTP_HOST]";
+                    header("location: {$url}/index");
+                }else{
+                    $this->messages = ["Wrong password!"];
+                }
             }
         }
         if($this->isPost() && $username == ''){

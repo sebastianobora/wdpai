@@ -57,11 +57,13 @@ class AppController {
         return true;
     }
 
-    protected function accessToEdit($editedUserId, $currentUser){
-        if($editedUserId != $currentUser->getUserId()){
-            $url = "http://$_SERVER[HTTP_HOST]";
-            header("location: {$url}/index");
+    protected function accessToEdit($editedUserId, $currentUser, $admin){
+        if(($editedUserId == $currentUser->getUserId()) or $admin){
+            return true;
         }
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("location: {$url}/index");
+        return true;
     }
 }
 

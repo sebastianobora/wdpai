@@ -26,7 +26,7 @@
                         <div class="type-details-content">
                             <h1><?= $type->getTitle(); ?></h1>
                             <div class="type-details-management-buttons">
-                                <?php if($author == $userDetails->getUsername()){?>
+                                <?php if($author == $userDetails->getUsername() or $admin){?>
                                     <a href="/editType/<?=$type->getId();?>" >Edit type</a>
                                     <a href="/deleteType/<?=$type->getId();?>" >Delete type</a>
                                 <?php }?>
@@ -73,7 +73,7 @@
                                         <span class="js-comment-message" contenteditable="false"><?=$comment->getMessage(); ?></span>
                                     </div>
                                     <p><?= $comment->getDate();?></p>
-                                    <?php if($comment->getUserDetails()->getUsername() == $userDetails->getUsername()){?>
+                                    <?php if($comment->getUserDetails()->getUsername() == $userDetails->getUsername() or $admin){?>
                                         <button class="js-comment-edit-button" onclick=editComment(<?=$comment->getId()?>)>Edit</button>
                                         <button class="js-comment-remove-button" onclick=removeComment(<?=$comment->getId()?>)>Remove</button>
                                     <?php }?>

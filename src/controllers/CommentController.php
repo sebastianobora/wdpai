@@ -9,12 +9,14 @@ class CommentController extends AppController
 {
     private $userRepository;
     private $commentRepository;
+    private $currentUser;
 
     public function __construct()
     {
         parent::__construct();
         $this->userRepository = new UserRepository();
         $this->commentRepository = new CommentRepository();
+        $this->currentUser = $this->userRepository->getUserByCookie($_COOKIE["user"]);
     }
 
 
@@ -56,12 +58,12 @@ class CommentController extends AppController
             $content = trim(file_get_contents("php://input"));
             $decoded = json_decode($content, true);
 
-            $userId = $this->userRepository->getUserId();
             $comment = $this->commentRepository->getCommentById($decoded['id']);
 
-            if ($comment->getUserId() == $userId) {
+            if($this->accessToEdit($comment->getUserId(), $this->currentUser, $this->userRepository->isAdmin())){
                 $this->commentRepository->removeCommentById($decoded['id']);
             }
+
             header('Content-Type: application/json');
             http_response_code(200);
         }
@@ -74,11 +76,10 @@ class CommentController extends AppController
         if ($contentType === "application/json") {
             $content = trim(file_get_contents("php://input"));
             $decoded = json_decode($content, true);
-
-            $userId = $this->userRepository->getUserId();
             $comment = $this->commentRepository->getCommentById($decoded['id']);
 
-            if ($comment->getUserId() == $userId) {
+            if($this->accessToEdit($comment->getUserId(), $this->currentUser, $this->userRepository->isAdmin()))
+            {
                 $this->commentRepository->editCommentById($decoded['message'], $decoded['id']);
             }
             header('Content-Type: application/json');

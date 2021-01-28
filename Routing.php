@@ -33,6 +33,7 @@ class Routing {
         $typeRepository = new TypeRepository();
         $userRepository = new UserRepository();
         $userDetailsRepository = new UserDetailsRepository();
+        $admin = $userRepository->isAdmin();
 
         if(!isset($_COOKIE["user"]) and $action != 'login' and $action != 'register'){
                 $action = 'index';
@@ -53,13 +54,13 @@ class Routing {
             }
         }
 
-        if(($action == 'editUser' or $action == 'deleteUser') and $arg and $arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername()){
+        if(($action == 'editUser' or $action == 'deleteUser') and $arg and ($arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername() and !$admin)){
             die('You have no access to do it! Wrong url!');
-        }// or is admin
+        }
 
-        if(($action == 'editType' or $action == 'deleteType') and $arg and $typeRepository->getTypeById($arg)->getIdUsers() != $userRepository->getUserId()){
+        if(($action == 'editType' or $action == 'deleteType') and $arg and ($typeRepository->getTypeById($arg)->getIdUsers() != $userRepository->getUserId() and !$admin)){
             die('You have no access to do it! Wrong url!');
-        }// or is admin
+        }
 
         if($action == 'types' and $arg and !in_array($arg, Type::$categories)){
             die('No such category! Wrong url!');
