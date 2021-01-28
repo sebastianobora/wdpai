@@ -189,4 +189,13 @@ class TypeRepository extends Repository
         $stmt->bindParam(':id',$id);
         $stmt->execute();
     }
+
+    public function deleteType($id)
+    {
+        $stmt = $this->database->connect()->prepare('
+        DELETE FROM types WHERE id =:id;
+        ');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
 }

@@ -80,7 +80,8 @@ class SecurityController extends AppController{
 
         $user = new User($email, hash('sha256', $password), $username);
         $detailsId = $this->userDetailsRepository->createUserDetails($user->getUsername());
-        $this->userRepository->addUser($user, $detailsId);
+        $userId = $this->userRepository->addUser($user, $detailsId);
+        $this->userRepository->createRole($userId);
         $this->render('login', ['messages' => ["Account created properly, now you can log in!"]]);
     }
 }

@@ -91,12 +91,29 @@ class UserRepository extends Repository
     public function addUser(User $user, $detailsId)
     {
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?);
+        INSERT INTO users (email, password, id_users_details) VALUES (?, ?, ?) RETURNING id;
         ');
         $stmt->execute([
             $user->getEmail(),
             $user->getPassword(),
             $detailsId
         ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
+    public function createRole($userId)
+    {
+        $stmt = $this->database->connect()->prepare('
+        INSERT INTO role (id_users) VALUES (?);
+        ');
+        $stmt->execute([$userId]);
+    }
+
+    public function isAdmin()
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT role.admin FROM role JOIN users ON role.id_users = users.id WHERE cookie = :cookie');
+        $stmt->execute([$_COOKIE["user"]]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['admin'];
     }
 }

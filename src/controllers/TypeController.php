@@ -42,10 +42,11 @@ class TypeController extends AppController{
     }
 
     public function type($typeId){
+        $admin = $this->userRepository->isAdmin();
         $type = $this->typeRepository->getTypeById($typeId);
         $author = $this->userDetailsRepository->getUserDetailsByUserId($type->getIdUsers())->getUsername();
         $comments = $this->commentRepository->getComments($typeId);
-        return $this->render('type', ['type' => $type, 'userDetails' => $this->userDetails, 'comments' => $comments, 'author' => $author]);
+        return $this->render('type', ['type' => $type, 'userDetails' => $this->userDetails, 'comments' => $comments, 'author' => $author, 'admin' => $admin]);
     }
 
     public function types($category){
@@ -98,49 +99,21 @@ class TypeController extends AppController{
         }
     }
 
-    public function addComment(){
-        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
-
-        if ($contentType === "application/json") {
-            $content = trim(file_get_contents("php://input"));
-            $decoded = json_decode($content, true);
-
-            $userId = $this->userRepository->getUserId();
-            $comment = new Comment($userId, $decoded['typeId'], $decoded['message']);
-            $commentId = $this->commentRepository->addComment($comment);
-
-            header('Content-Type: application/json');
-            http_response_code(200);
-            $newComment = $this->commentRepository->getCommentById($commentId);
-
-            echo json_encode(
-                [
-                    'id' => $newComment->getId(),
-                    'userId' => $newComment->getUserId(),
-                    'typeId' => $newComment->getTypeId(),
-                    'message' => $newComment->getMessage(),
-                    'date' => $newComment->getDate(),
-                    'avatar' => $newComment->getUserDetails()->getImage(),
-                    'username' => $newComment->getUserDetails()->getUsername()
-                ]);
-            }
-    }
-
     public function editType($typeId){
         if($this->isPost()){
             $editedType = $this->typeRepository->getTypeById($_POST['id']);
-            $this->accessToEdit($editedType->getIdUsers(), $this->currentUser);
-
-            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
-                $file = $this->prepareFile($_FILES['file']);
-                $this->typeRepository->updateTypeField("image", $file, $_POST['id']);
-            }
-            if($_POST['title'] != '' && $_POST['description'] != '' && $_POST['category'] != ''){
-                $this->typeRepository->updateTypeField("title", $_POST['title'], $_POST['id']);
-                $this->typeRepository->updateTypeField("description", $_POST['description'], $_POST['id']);
-                $this->typeRepository->updateTypeField("category", $_POST['category'], $_POST['id']);
-            }else{
-                $this->messages = ["All of fields have to be filled!"];
+            if($this->accessToEdit($editedType->getIdUsers(), $this->currentUser, $this->userRepository->isAdmin())){
+                if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
+                    $file = $this->prepareFile($_FILES['file']);
+                    $this->typeRepository->updateTypeField("image", $file, $_POST['id']);
+                }
+                if($_POST['title'] != '' && $_POST['description'] != '' && $_POST['category'] != ''){
+                    $this->typeRepository->updateTypeField("title", $_POST['title'], $_POST['id']);
+                    $this->typeRepository->updateTypeField("description", $_POST['description'], $_POST['id']);
+                    $this->typeRepository->updateTypeField("category", $_POST['category'], $_POST['id']);
+                }else{
+                    $this->messages = ["All of fields have to be filled!"];
+                }
             }
         }
         if($this->isPost() && $typeId == ''){
@@ -151,6 +124,11 @@ class TypeController extends AppController{
     }
 
     public function deleteType($typeId){
-
+        $editedType = $this->typeRepository->getTypeById($typeId);
+        if($this->accessToEdit($editedType->getIdUsers(), $this->currentUser, $this->userRepository->isAdmin())){
+            $this->typeRepository->deleteType($typeId);
+        }
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("location: {$url}/types");
     }
 }
