@@ -73,9 +73,13 @@ class UserController extends AppController{
                 setcookie("user", "", time() - 3600);
                 $url = "http://$_SERVER[HTTP_HOST]";
                 header("location: {$url}/index");
+            }else{
+                $this->messages = ["Wrong password!"];
             }
         }
-
+        if($this->isPost() && $username == ''){
+            $username = $_POST['username'];
+        }
         $fetchedUserDetails = $this->userDetailsRepository->getUserDetailsByUsername($username);
         $this->render('delete-user', ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails, 'messages' => $this->messages]);
     }

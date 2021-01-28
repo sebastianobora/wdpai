@@ -151,6 +151,10 @@ class TypeController extends AppController{
     }
 
     public function deleteType($typeId){
-
+        $editedType = $this->typeRepository->getTypeById($typeId);
+        $this->accessToEdit($editedType->getIdUsers(), $this->currentUser);
+        $this->typeRepository->deleteType($typeId);
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("location: {$url}/types");
     }
 }

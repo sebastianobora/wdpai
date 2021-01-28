@@ -69,12 +69,11 @@ class Routing {
             die('No such type! Wrong url!');
         }
 
-
         if($action == 'user' and $arg and !$userDetailsRepository->getUserDetailsByUsername($arg)){
             die('No such user! Wrong url!');
         }
 
-        if(($action == 'type' or $action == 'user') and !$arg){
+        if(($action == 'type' or $action == 'user' or $action == 'deleteType') and !$arg){
             die('Wrong url');
         }
 
