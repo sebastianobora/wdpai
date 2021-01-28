@@ -56,6 +56,13 @@ class AppController {
         }
         return true;
     }
+
+    protected function accessToEdit($editedUserId, $currentUser){
+        if($editedUserId != $currentUser->getUserId()){
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("location: {$url}/index");
+        }
+    }
 }
 
 ?>

@@ -53,7 +53,11 @@ class Routing {
             }
         }
 
-        if($action == 'editUser' and $arg and $arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername()){
+        if(($action == 'editUser' or $action == 'deleteUser') and $arg and $arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername()){
+            die('You have no access to do it! Wrong url!');
+        }// or is admin
+
+        if(($action == 'editType' or $action == 'deleteType') and $arg and $typeRepository->getTypeById($arg)->getIdUsers() != $userRepository->getUserId()){
             die('You have no access to do it! Wrong url!');
         }// or is admin
 

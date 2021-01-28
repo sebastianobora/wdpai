@@ -41,6 +41,9 @@ class UserRepository extends Repository
         );
         $stmt->execute([$username]);
         $user =  $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user == false) {
+            return null;
+        }
         return new User(
             $user['email'],
             $user['password'],
@@ -68,7 +71,7 @@ class UserRepository extends Repository
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users WHERE cookie = :cookie
         ');
-        $stmt->bindParam(':cookie', $cookie, PDO::PARAM_STR);
+        $stmt->bindParam(':cookie', $cookie);
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -80,7 +83,8 @@ class UserRepository extends Repository
         return new User(
             $user['email'],
             $user['password'],
-            $user['username']
+            $user['username'],
+            $user['id']
         );
     }
 
@@ -95,19 +99,4 @@ class UserRepository extends Repository
             $detailsId
         ]);
     }
-
-/*    public function userExist($username){
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE username = :username
-        ');
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->execute();
-
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user) {
-            return true;
-        }else{
-            return false;
-        }
-    }*/
 }

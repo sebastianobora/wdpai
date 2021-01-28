@@ -25,6 +25,13 @@
                         <img class="type-details-image" src="/public/uploads/<?= $type->getImage(); ?>">
                         <div class="type-details-content">
                             <h1><?= $type->getTitle(); ?></h1>
+                            <div class="type-details-management-buttons">
+                                <?php if($author == $userDetails->getUsername()){?>
+                                    <a href="/editType/<?=$type->getId();?>" >Edit type</a>
+                                    <a href="/deleteType/<?=$type->getId();?>" >Delete type</a>
+                                <?php }?>
+                            </div>
+                            <a class="type-author-href" href="/types/<?=$type->getCategory()?>">Category: <?=$type->getCategory()?></a>
                             <p><?= $type->getCreatedAt(); ?></p>
                             <p><?= $type->getDescription(); ?></p>
                             <a class="type-author-href" href="/user/<?=$author?>">Author: <?=$author?></a>

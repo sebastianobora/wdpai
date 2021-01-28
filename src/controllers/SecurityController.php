@@ -68,6 +68,11 @@ class SecurityController extends AppController{
         {
             return $this->render('register', ['messages' => ["User with this email already exist!"]]);
         }
+
+        if($this->userRepository->getUserByUsername($username)){
+            return $this->render('register', ['messages' => ["User with this username already exist!"]]);
+        }
+
         if($password != $confirmedPassword)
         {
             return $this->render('register', ['messages' => ["Passwords do not match!"]]);
@@ -76,7 +81,6 @@ class SecurityController extends AppController{
         $user = new User($email, hash('sha256', $password), $username);
         $detailsId = $this->userDetailsRepository->createUserDetails($user->getUsername());
         $this->userRepository->addUser($user, $detailsId);
-
         $this->render('login', ['messages' => ["Account created properly, now you can log in!"]]);
     }
 }

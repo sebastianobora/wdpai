@@ -82,4 +82,12 @@ class UserDetailsRepository extends Repository
         $stmt->bindParam(':username',$username);
         $stmt->execute();
     }
+
+    public function deleteUserUserDetails($username){
+        $stmt = $this->database->connect()->prepare('
+        DELETE FROM users_details WHERE username =:username;
+        ');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+    }
 }

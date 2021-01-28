@@ -10,6 +10,7 @@ class UserController extends AppController{
     private $userRepository;
     private $userDetailsRepository;
     private $userDetails;
+    private $currentUser;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class UserController extends AppController{
         $this->userRepository = new UserRepository();
         $this->userDetailsRepository = new UserDetailsRepository();
         $this->userDetails = $this->userDetailsRepository->getUserDetailsByCookie();
+        $this->currentUser = $this->userRepository->getUserByCookie($_COOKIE["user"]);
         $this->messages = [];
     }
 
@@ -28,35 +30,53 @@ class UserController extends AppController{
     public function editUser($username){
         if($this->isPost()){
             $this->messages = ["Your account details has been updated successfully!"];
-            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
-                $file = $this->prepareFile($_FILES['file']);
-                $this->userDetailsRepository->updateUserDetailsField("image", $file, $_POST['username']);
-            }
-            if(isset($_POST['name'])){
-                $this->userDetailsRepository->updateUserDetailsField("name", $_POST['name'], $_POST['username']);
-            }
-            if(isset($_POST['surname'])){
-                $this->userDetailsRepository->updateUserDetailsField("surname", $_POST['surname'], $_POST['username']);
-            }
-            if(isset($_POST['phone'])){
-                $this->userDetailsRepository->updateUserDetailsField("phone", $_POST['phone'], $_POST['username']);
-            }
-            if(hash("sha256",$_POST['password']) == $this->userRepository->getUserByUsername($_POST['username'])->getPassword()){
-                if($_POST['newPassword'] != "" && $_POST['newPassword'] == $_POST['confirmNewPassword']){
-                    $user = $this->userRepository->getUserByUsername($_POST['username']);
-                    $this->userRepository->changePassword(hash("sha256",$_POST['newPassword']), $user->getUserId());
-                }else{
-                    $this->messages = ["Passwords do not match!"];
-                }
-            }else if($_POST['password'] != ''){
-                $this->messages = ["Wrong password!"];
-            }
+            $editedUser = $this->userRepository->getUserByUsername($_POST['username']);
+            $this->accessToEdit($editedUser->getUserId(),$this->currentUser);
+            $this->updateUsersFields($editedUser);
         }
-        if($username == ''){
+        if($this->isPost() && $username == ''){
             $username = $_POST['username'];
         }
         $fetchedUserDetails = $this->userDetailsRepository->getUserDetailsByUsername($username);
         $this->render('edit-user',
             ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails, 'messages' => $this->messages]);
+    }
+
+    public function updateUsersFields($editedUser){
+        if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
+            $file = $this->prepareFile($_FILES['file']);
+            $this->userDetailsRepository->updateUserDetailsField("image", $file, $_POST['username']);
+        }
+        $this->userDetailsRepository->updateUserDetailsField("name", $_POST['name'], $_POST['username']);
+        $this->userDetailsRepository->updateUserDetailsField("surname", $_POST['surname'], $_POST['username']);
+        $this->userDetailsRepository->updateUserDetailsField("phone", $_POST['phone'], $_POST['username']);
+
+        if($_POST['password'] != '' && $_POST['newPassword'] != '' && $_POST['newPassword'] != ''){
+            if(hash("sha256",$_POST['password']) == $editedUser->getPassword()){
+                if($_POST['newPassword'] == $_POST['confirmNewPassword']){
+                    $this->userRepository->changePassword(hash("sha256",$_POST['newPassword']), $editedUser->getUserId());
+                }else{
+                    $this->messages = ["Passwords do not match!"];
+                }
+        }else{
+                $this->messages = ["Wrong password!"];
+            }
+        }
+    }
+
+    public function deleteUser($username){
+        if($this->isPost()){
+            $deletedUser = $this->userRepository->getUserByUsername($_POST['username']);
+            $this->accessToEdit($deletedUser->getUserId(), $this->currentUser);
+            if(isset($_POST['password']) && hash("sha256",$_POST['password']) == $deletedUser->getPassword()){
+                $this->userDetailsRepository->deleteUserUserDetails($_POST['username']);
+                setcookie("user", "", time() - 3600);
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("location: {$url}/index");
+            }
+        }
+
+        $fetchedUserDetails = $this->userDetailsRepository->getUserDetailsByUsername($username);
+        $this->render('delete-user', ['fetchedUserDetails' => $fetchedUserDetails, 'userDetails' => $this->userDetails, 'messages' => $this->messages]);
     }
 }

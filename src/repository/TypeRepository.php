@@ -179,4 +179,14 @@ class TypeRepository extends Repository
         }
         return $result;
     }
+
+    public function updateTypeField($field, $value, $id)
+    {
+        $stmt = $this->database->connect()->prepare("
+        UPDATE types SET $field = :value WHERE id = :id
+        ");
+        $stmt->bindParam(':value',$value);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+    }
 }

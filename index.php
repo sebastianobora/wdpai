@@ -9,7 +9,8 @@ Routing::get('', 'DefaultController');
 Routing::get('index','DefaultController');
 
 Routing::get('user', 'UserController');
-Routing::get('editUser', 'UserController');
+Routing::post('editUser', 'UserController');
+Routing::post('deleteUser', 'UserController');
 
 Routing::get('type', 'TypeController');
 Routing::get('types','TypeController');
@@ -22,10 +23,9 @@ Routing::get('logout', 'SecurityController');
 
 Routing::post('like', 'TypeController');
 
-Routing::get('ratedTypeId', 'TypeController');
-
-
 Routing::post('addType','TypeController');
+Routing::post('editType','TypeController');
+Routing::post('deleteType', 'TypeController');
 Routing::post('search', 'TypeController');
 
 Routing::post('addComment', 'CommentController');
