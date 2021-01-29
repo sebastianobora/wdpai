@@ -1,7 +1,7 @@
 <DOCTYPE html>
     <head>
         <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
-
+        <link rel="shortcut icon" href="/favicon.ico">
         <title>LOGIN PAGE</title>
     </head>
     <body>
