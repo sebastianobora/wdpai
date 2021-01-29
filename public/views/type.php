@@ -21,21 +21,35 @@
             <section class="js-types">
 
                 <div class="type-details-wrapper js-type-wrapper" id="<?= $type->getId(); ?>">
+                    <img class="type-details-image img-fluid" src="/public/uploads/<?= $type->getImage(); ?>">
                     <div class="type-details">
-                        <img class="type-details-image" src="/public/uploads/<?= $type->getImage(); ?>">
                         <div class="type-details-content">
-                            <h1><?= $type->getTitle(); ?></h1>
-                            <div class="type-details-management-buttons">
-                                <?php if($author == $userDetails->getUsername() or $admin){?>
-                                    <a href="/editType/<?=$type->getId();?>" >Edit type</a>
-                                    <a href="/deleteType/<?=$type->getId();?>" >Delete type</a>
-                                <?php }?>
+                            <h1 class="type-details-title"><?= $type->getTitle(); ?></h1>
+                            <div class="type-details-management-wrapper">
+                                <div class="type-details-management-infos">
+                                    <a class="type-author-href" href="/types/<?=$type->getCategory()?>">
+                                        Category: <?=$type->getCategory()?>
+                                    </a>
+                                    <a class="type-author-href" href="/user/<?=$author?>">
+                                        Author: <?=$author?>
+                                    </a>
+                                    <span class="type-details-date">
+                                        Date add: <?= $type->getCreatedAt(); ?>
+                                    </span>
+                                </div>
+                                <div class="type-details-management-buttons">
+                                    <?php if($author == $userDetails->getUsername() or $admin){?>
+                                        <a class="type-details-management-button" href="/editType/<?=$type->getId();?>">
+                                            <i class="fas fa-pencil-alt type-details-management-icon"></i>
+                                        </a>
+                                        <a class="type-details-management-button" href="/deleteType/<?=$type->getId();?>" >
+                                            <i class="far fa-trash-alt type-details-management-icon"></i>
+                                        </a>
+                                    <?php }?>
+                                </div>
                             </div>
-                            <a class="type-author-href" href="/types/<?=$type->getCategory()?>">Category: <?=$type->getCategory()?></a>
-                            <p><?= $type->getCreatedAt(); ?></p>
-                            <p><?= $type->getDescription(); ?></p>
-                            <a class="type-author-href" href="/user/<?=$author?>">Author: <?=$author?></a>
-                            <div class="type-social">
+                            <p class="type-details-description"><?= $type->getDescription(); ?></p>
+                            <div class="type-social type-social-margin-bottom">
                                 <div class="like">
                                     <i class="fas fa-heart js-like-button <?php if($type->getIsLiked()){ echo "type-social-icon"; } ?>"></i>
                                     <span class="js-like-content"><?= $type->getLikes(); ?></span>
@@ -50,7 +64,9 @@
                         </div>
                         <div class="type-details-create-comment-wrapper">
                             <textarea class="type-details-comments-textarea js-type-details-comments-textarea"></textarea>
-                            <button class="js-type-details-add-comment-button">Comment</button>
+                            <button class="js-type-details-add-comment-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
                         </div>
 
                         <div class="js-comments-wrapper type-details-comments-wrapper">

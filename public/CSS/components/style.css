@@ -134,26 +134,26 @@ select:disabled:hover, select[aria-disabled=true] {
     opacity: 0.75;
 }
 
-@media only screen and (max-device-width: 420px) {
-    * {
-        /*font-size: 36px;*/
-    }
+/*@media only screen and (max-device-width: 420px) {*/
+/*    * {*/
+/*        !*font-size: 36px;*!*/
+/*    }*/
 
-    .login-container, .logo {
-        /*width: 100%;*/
-    }
+/*    .login-container, .logo {*/
+/*        !*width: 100%;*!*/
+/*    }*/
 
-    form {
-        /*height: 35vh;*/
-        /*width: 80%;*/
-        margin: 0 auto;
-    }
+/*    form {*/
+/*        !*height: 35vh;*!*/
+/*        !*width: 80%;*!*/
+/*        margin: 0 auto;*/
+/*    }*/
 
-    img {
-        /*width: 80%;*/
-        margin: 0 auto;
-    }
-}
+/*    img {*/
+/*        !*width: 80%;*!*/
+/*        margin: 0 auto;*/
+/*    }*/
+/*}*/
 
 .base-container {
     display: flex;
@@ -224,7 +224,7 @@ li > i {
 }
 
 main {
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     margin-top: 76px;
     width: 80%;
     display: flex;
