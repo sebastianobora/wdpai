@@ -19,7 +19,10 @@
 
             <section class="js-types">
                 <section class="user-details-wrapper">
-                    <img class="user-details-avatar" src="/public/uploads/<?= $fetchedUserDetails->getImage(); ?>">
+                    <div class="user-delete-avatar-wrapper">
+                        <img class="user-details-avatar user-delete-avatar img-fluid" src="/public/uploads/<?= $fetchedUserDetails->getImage(); ?>">
+                    </div>
+
                     <form class="user-edit-form" action="/editUser" method="POST" ENCTYPE="multipart/form-data">
                         <input class="user-edit-username-input" name="username" type="text" value="<?= $fetchedUserDetails->getUsername(); ?>" readonly>
                         <input class="form-input" type="file" name="file">
@@ -33,7 +36,7 @@
                         <input class="form-input" name="newPassword" type="password" placeholder="New password">
                         <input class="form-input" name="confirmNewPassword" type="password" placeholder="Confirm new password">
                         <div class="message"><?php if(isset($messages)){foreach ($messages as $message) {echo $message;}} ?></div>
-                        <button type="submit">Save changes</button>
+                        <button class="btn-submit-margin-top" type="submit">Save changes</button>
                     </form>
                 </section>
             </section>
