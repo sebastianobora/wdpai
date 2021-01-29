@@ -8,7 +8,7 @@
         <div class="auth-container">
             <div class="auth-logo-container">
                 <a href="login">
-                    <img class="img-fluid" src="public/img/logo.svg">
+                    <img class="img-fluid" src="/public/img/logo.svg">
                 </a>
             </div>
             <div class="login-container">
