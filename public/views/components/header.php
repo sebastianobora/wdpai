@@ -1,7 +1,6 @@
 <head>
     <script type="text/javascript" src="/public/js/search.js" defer></script>
     <script type="text/javascript" src="/public/js/dropdown.js" defer></script>
-    <link rel="shortcut icon" href="/favicon.ico">
 </head>
 
 <header class="header">

@@ -3,7 +3,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
     <script type="text/javascript" src="./public/js/script.js" defer></script>
-    <link rel="shortcut icon" href="/favicon.ico">
     <title>register</title>
 </head>
 

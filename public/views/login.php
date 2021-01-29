@@ -1,7 +1,6 @@
 <DOCTYPE html>
     <head>
         <link rel="stylesheet" type="text/css" href="/public/CSS/index.css">
-        <link rel="shortcut icon" href="/favicon.ico">
         <title>rozerwijsie</title>
     </head>
     <body>
