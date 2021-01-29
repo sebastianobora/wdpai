@@ -54,11 +54,13 @@ class Routing {
             }
         }
 
-        if(($action == 'editUser' or $action == 'deleteUser') and $arg and ($arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername() and !$admin)){
+        if(($action == 'editUser' or $action == 'deleteUser') and
+            $arg and ($arg != $userDetailsRepository->getUserDetailsByCookie()->getUsername() and !$admin)){
             die('You have no access to do it! Wrong url!');
         }
 
-        if(($action == 'editType' or $action == 'deleteType') and $arg and ($typeRepository->getTypeById($arg)->getIdUsers() != $userRepository->getUserId() and !$admin)){
+        if(($action == 'editType' or $action == 'deleteType') and
+            $arg and ($typeRepository->getTypeById($arg)->getIdUsers() != $userRepository->getUserId() and !$admin)){
             die('You have no access to do it! Wrong url!');
         }
 

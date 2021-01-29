@@ -63,7 +63,6 @@ class CommentController extends AppController
             if($this->accessToEdit($comment->getUserId(), $this->currentUser, $this->userRepository->isAdmin())){
                 $this->commentRepository->removeCommentById($decoded['id']);
             }
-
             header('Content-Type: application/json');
             http_response_code(200);
         }

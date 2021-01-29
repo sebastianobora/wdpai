@@ -22,7 +22,6 @@ class SecurityController extends AppController{
 
         $email = $_POST["email"];
         $password = $_POST["password"];
-
         $user = $this->userRepository->getUser($email);
 
         if(!$user){
@@ -64,8 +63,7 @@ class SecurityController extends AppController{
             return $this->render('register',['messages' => ["Fields can't be empty"]] );
         }
 
-        if($user)
-        {
+        if($user){
             return $this->render('register', ['messages' => ["User with this email already exist!"]]);
         }
 
@@ -73,8 +71,7 @@ class SecurityController extends AppController{
             return $this->render('register', ['messages' => ["User with this username already exist!"]]);
         }
 
-        if($password != $confirmedPassword)
-        {
+        if($password != $confirmedPassword) {
             return $this->render('register', ['messages' => ["Passwords do not match!"]]);
         }
 

@@ -11,7 +11,7 @@ class UserDetailsRepository extends Repository
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users_details WHERE username = :username
         ');
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':username', $username);
         $stmt->execute();
 
         $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
