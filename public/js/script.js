@@ -23,7 +23,6 @@ function validateEmail(){
 }
 
 function validatePassword(){
-    //TODO: poziom skomplikowania hasła i czy jest odpowiednio zapisane
     setTimeout(function () {
             const condition = arePasswordsSame(passwordInput.value, confirmedPasswordInput.value);
             markValidation(confirmedPasswordInput, condition);

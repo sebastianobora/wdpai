@@ -52,7 +52,11 @@ class UserController extends AppController{
         }
         $this->userDetailsRepository->updateUserDetailsField("name", $_POST['name'], $_POST['username']);
         $this->userDetailsRepository->updateUserDetailsField("surname", $_POST['surname'], $_POST['username']);
-        $this->userDetailsRepository->updateUserDetailsField("phone", $_POST['phone'], $_POST['username']);
+        if(strlen($_POST['phone']) <= 9){
+            $this->userDetailsRepository->updateUserDetailsField("phone", $_POST['phone'], $_POST['username']);
+        }else{
+            $this->messages = ["Wrong phone number!"];
+        }
 
         if($_POST['password'] != '' && $_POST['newPassword'] != '' && $_POST['newPassword'] != ''){
             if(hash("sha256",$_POST['password']) == $editedUser->getPassword()){
@@ -72,8 +76,10 @@ class UserController extends AppController{
             $deletedUser = $this->userRepository->getUserByUsername($_POST['username']);
             if($this->accessToEdit($deletedUser->getUserId(), $this->currentUser, $this->userRepository->isAdmin())){
                 if(hash("sha256",$_POST['password']) == $deletedUser->getPassword() or $this->userRepository->isAdmin()){
+                    if($deletedUser->getUserId() == $this->currentUser->getUserId()){
+                        setcookie("user", "", time() - 3600);
+                    }
                     $this->userDetailsRepository->deleteUserUserDetails($_POST['username']);
-                    setcookie("user", "", time() - 3600);
                     $url = "http://$_SERVER[HTTP_HOST]";
                     header("location: {$url}/index");
                 }else{
