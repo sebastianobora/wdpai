@@ -59,7 +59,7 @@ function loadComment(comment){
     commentEditButton.addEventListener("click", () => editComment(comment.id));
     commentEditButton.innerHTML = "<i class='fas fa-pencil-alt type-details-management-icon'></i>";
 
-    commentsWrapper.appendChild(clone);
+    commentsWrapper.prepend(clone);
 }
 
 function removeComment(commentId){

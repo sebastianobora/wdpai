@@ -51,7 +51,8 @@ class TypeRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare('
                 SELECT title, description, image, category, likes, dislikes, ts.id,
-       (SELECT "like" FROM statistics WHERE user_id = :userId AND type_id = ts.id) isliked FROM types_statistics ts WHERE id_users = :id');
+       (SELECT "like" FROM statistics WHERE user_id = :userId AND type_id = ts.id) isliked 
+                FROM types_statistics ts WHERE id_users = :id ORDER BY likes DESC');
 
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':userId',$userId, PDO::PARAM_INT);
@@ -66,7 +67,8 @@ class TypeRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare('
         SELECT title, description, image, category, id_users, created_at, likes, dislikes, ts.id,
-       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts');
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked 
+        FROM types_statistics ts ORDER BY likes DESC');
 
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
@@ -80,7 +82,7 @@ class TypeRepository extends Repository
         $stmt = $this->database->connect()->prepare('
         SELECT title, description, image, category, id_users, created_at, likes, dislikes, ts.id,
        (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked 
-        FROM types_statistics ts WHERE LOWER(category) = :category');
+        FROM types_statistics ts WHERE LOWER(category) = :category ORDER BY likes DESC');
 
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
@@ -98,8 +100,9 @@ class TypeRepository extends Repository
 
         $stmt = $this->database->connect()->prepare('
             SELECT title, description, image, category, likes, dislikes, ts.id,
-       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked FROM types_statistics ts WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search OR LOWER(category) LIKE :search
-        ');
+       (SELECT "like" FROM statistics WHERE user_id = :id AND type_id = ts.id) isliked 
+            FROM types_statistics ts WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search 
+                                        OR LOWER(category) LIKE :search ORDER BY likes DESC');
 
         $userId = $this->userRepository->getUserId();
         $stmt->bindParam(':id',$userId, PDO::PARAM_INT);
@@ -152,7 +155,7 @@ class TypeRepository extends Repository
         WHERE s."like" = false AND s.type_id = types.id) dislikes, types.id,
        (SELECT "like" FROM statistics WHERE user_id = :userId AND type_id = types.id) isliked
         FROM types JOIN statistics s on types.id = s.type_id WHERE "like" = true and user_id = :userId
-    ');
+    ORDER BY likes DESC');
 
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
