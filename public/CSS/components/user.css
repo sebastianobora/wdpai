@@ -23,6 +23,11 @@
     display: flex;
 }
 
+.user-details-avatar{
+    width: 128px;
+    height: 128px;
+}
+
 @media all and (max-width: 359.98px){
     .user-details-info-wrapper{
         flex-direction: column;
