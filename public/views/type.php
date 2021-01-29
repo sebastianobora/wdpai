@@ -63,7 +63,10 @@
                             </div>
                         </div>
                         <div class="type-details-create-comment-wrapper">
-                            <textarea class="type-details-comments-textarea js-type-details-comments-textarea"></textarea>
+                            <label for="type-details-comment-textarea" class="type-details-comments-label">
+                                Add your comment
+                            </label>
+                            <textarea name="type-details-comment-textarea" class="type-details-comments-textarea js-type-details-comments-textarea"></textarea>
                             <button class="js-type-details-add-comment-button">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -74,25 +77,39 @@
                             foreach($comments as $comment): ?>
                             <div class="type-details-comment-wrapper js-comment-wrapper" id="comment_<?=$comment->getId();?>">
                                 <div class="type-details-comment-head">
-                                    <div class="avatar">
-                                        <a href="/user/<?=$comment->getUserDetails()->getUsername()?>">
-                                            <img src="/public/uploads/<?= $comment->getUserDetails()->getImage(); ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
-                                        </a>
+                                    <div class="type-details-comment-wrapper-info">
+                                        <div class="avatar">
+                                            <a href="/user/<?=$comment->getUserDetails()->getUsername()?>">
+                                                <img src="/public/uploads/<?= $comment->getUserDetails()->getImage(); ?>" alt="Avatar" class="js-avatar-image avatar-image img-fluid">
+                                            </a>
+                                        </div>
+                                        <div class="type-details-comment-col">
+                                            <a class="type-details-comment-user" href="/user/<?=$comment->getUserDetails()->getUsername()?>">
+                                                <p class="type-details-comment-user-paragraph">
+                                                    <?= $comment->getUserDetails()->getUsername(); ?>
+                                                </p>
+                                            </a>
+                                            <p class="type-details-comment-date">
+                                                <?= $comment->getDate();?>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <a href="/user/<?=$comment->getUserDetails()->getUsername()?>">
-                                        <p><?= $comment->getUserDetails()->getUsername(); ?></p>
-                                    </a>
+                                    <?php if($comment->getUserDetails()->getUsername() == $userDetails->getUsername() or $admin){?>
+                                        <div class="type-details-management-buttons">
+                                            <span class="type-details-management-button js-comment-edit-button" onclick=editComment(<?=$comment->getId()?>)>
+                                                <i class="fas fa-pencil-alt type-details-management-icon"></i>
+                                            </span>
+                                            <span class="type-details-management-button js-comment-remove-button" onclick=removeComment(<?=$comment->getId()?>)>
+                                                <i class="far fa-trash-alt type-details-management-icon"></i>
+                                        </span>
+                                        </div>
+                                    <?php }?>
                                 </div>
 
                                 <div class="type-details-comment-content-wrapper">
                                     <div class="type-details-comment-content">
                                         <span class="js-comment-message" contenteditable="false"><?=$comment->getMessage(); ?></span>
                                     </div>
-                                    <p><?= $comment->getDate();?></p>
-                                    <?php if($comment->getUserDetails()->getUsername() == $userDetails->getUsername() or $admin){?>
-                                        <button class="js-comment-edit-button" onclick=editComment(<?=$comment->getId()?>)>Edit</button>
-                                        <button class="js-comment-remove-button" onclick=removeComment(<?=$comment->getId()?>)>Remove</button>
-                                    <?php }?>
                                 </div>
                             </div>
                             <?php endforeach; } ?>

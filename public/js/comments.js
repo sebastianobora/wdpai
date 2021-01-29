@@ -53,11 +53,11 @@ function loadComment(comment){
 
     const commentRemoveButton = clone.querySelector(".js-comment-remove-button");
     commentRemoveButton.addEventListener("click", () => removeComment(comment.id));
-    commentRemoveButton.innerHTML = "Remove";
+    commentRemoveButton.innerHTML = "<i class='far fa-trash-alt type-details-management-icon'></i>";
 
     const commentEditButton = clone.querySelector(".js-comment-edit-button");
     commentEditButton.addEventListener("click", () => editComment(comment.id));
-    commentEditButton.innerHTML = "Edit";
+    commentEditButton.innerHTML = "<i class='fas fa-pencil-alt type-details-management-icon'></i>";
 
     commentsWrapper.appendChild(clone);
 }
@@ -80,11 +80,11 @@ function editComment(commentId){
     let commentMessage = commentWrapper.querySelector(".js-comment-message");
     let editButton = commentWrapper.querySelector(".js-comment-edit-button");
     if(commentMessage.contentEditable === 'false'){
-        editButton.innerHTML = "Submit";
+        editButton.innerHTML = "<i class='fas fa-paper-plane type-details-management-icon'></i>";
         commentMessage.contentEditable = true;
         commentMessage.focus();
     }else{
-        editButton.innerHTML = "Edit";
+        editButton.innerHTML = "<i class='fas fa-pencil-alt type-details-management-icon'></i>";
         commentMessage.contentEditable = false;
         const data = {
             id: commentId,
