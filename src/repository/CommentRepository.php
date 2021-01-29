@@ -18,15 +18,14 @@ class CommentRepository extends Repository
         $date = new DateTime();
         $date->setTimezone(new DateTimeZone('Europe/Warsaw'));
         $stmt = $this->database->connect()->prepare('
-        INSERT INTO comments (user_id, type_id, date, message, answer_to)
-        VALUES (?, ?, ?, ?, ?) RETURNING id');
+        INSERT INTO comments (user_id, type_id, date, message)
+        VALUES (?, ?, ?, ?) RETURNING id');
 
         $stmt->execute([
             $comment->getUserId(),
             $comment->getTypeId(),
             $date->format('Y-m-d H:i:s'),
-            $comment->getMessage(),
-            $comment->getAnswerTo()
+            $comment->getMessage()
         ]);
         return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
     }

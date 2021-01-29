@@ -74,16 +74,23 @@ class TypeController extends AppController{
     }
 
     public function addType(){
-        if($this->isPost() && $this->validateFile($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])){
-            if($_POST['title'] != '' && $_POST['description'] != ''){
-                $file = $this->prepareFile($_FILES['file']);
-                $type = new Type($_POST['title'], $_POST['description'], $file, $_POST['category']);
-                $this->typeRepository->addType($type);
-                $url = "http://$_SERVER[HTTP_HOST]";
-                header("location: {$url}/types");
+        if($this->isPost()){
+            if($this->validateFile($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])){
+                if($_POST['title'] != '' && $_POST['description'] != ''){
+                    $file = $this->prepareFile($_FILES['file']);
+                    $type = new Type($_POST['title'], $_POST['description'], $file, $_POST['category']);
+                    $this->typeRepository->addType($type);
+                    $url = "http://$_SERVER[HTTP_HOST]";
+                    header("location: {$url}/types");
+                }else{
+                    $this->messages = ["Title and description can't be empty!"];
+                }
+            }else{
+                $this->messages = ["You can't add type without image!"];
             }
         }
-        return $this ->render("add-types", ['userDetails' => $this->userDetails, 'categories' => Type::$categories]);
+        $args = ['userDetails' => $this->userDetails, 'categories' => Type::$categories, 'messages' => $this->messages];
+        return $this ->render("add-types", $args);
     }
 
     public function like (int $id){

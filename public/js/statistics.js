@@ -43,7 +43,8 @@ types.forEach(type =>{
     const dislikeContent = type.querySelector(".js-dislike-content");
 
     const id = type.getAttribute("id");
-
-    likeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, true, id));
-    dislikeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, false, id));
+    if(likeButton && dislikeButton){
+        likeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, true, id));
+        dislikeButton.addEventListener("click", () => updateStatistics(likeContent, dislikeContent, likeButton, dislikeButton, false, id));
+    }
 });

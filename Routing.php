@@ -9,7 +9,7 @@ require_once 'src/repository/UserRepository.php';
 require_once 'src/repository/UserDetailsRepository.php';
 
 class Routing {
-    public static $routes; # url oraz ścieżka kontrolera
+    public static $routes;
 
     public static function get($url, $view){
         self::$routes[$url] = $view;
