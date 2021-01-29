@@ -108,7 +108,7 @@
 
                                 <div class="type-details-comment-content-wrapper">
                                     <div class="type-details-comment-content">
-                                        <span class="js-comment-message" contenteditable="false"><?=$comment->getMessage(); ?></span>
+                                        <span class="js-comment-message type-details-comment-message" contenteditable="false"><?=$comment->getMessage(); ?></span>
                                     </div>
                                 </div>
                             </div>

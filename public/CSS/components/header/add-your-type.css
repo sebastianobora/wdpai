@@ -15,17 +15,8 @@
     transition: background-color .15s ease-in, color .15s ease-in;
 }
 
-@media all and (max-width: 767.98px){
-    .add-your-type{
-        padding-left: 3em;
-        padding-right: 3em;
-    }
-}
-
 @media all and (max-width: 575.98px){
     .add-your-type{
-        padding-left: 1.5em;
-        padding-right: 1.5em;
         order: 2;
     }
 }
@@ -47,6 +38,21 @@
     cursor: pointer;
     text-align: center;
     transition: color .15s ease-in;
+}
+
+@media all and (max-width: 767.98px){
+    .add-your-type-href{
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+}
+
+@media all and (max-width: 575.98px){
+    .add-your-type-href{
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+        order: 2;
+    }
 }
 
 /*.add-your-type-href:hover{*/

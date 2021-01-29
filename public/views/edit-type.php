@@ -20,8 +20,8 @@
             <section class="js-types">
 
                 <div class="type-details-wrapper js-type-wrapper" id="<?= $type->getId(); ?>">
-                    <div class="type-details">
-                        <img class="type-details-image" src="/public/uploads/<?= $type->getImage(); ?>">
+                    <img class="type-details-image img-fluid" src="/public/uploads/<?= $type->getImage(); ?>">
+                    <div class="type-details type-details-edit">
                         <div class="type-details-content">
                             <form class="user-edit-form" action="/editType" method="POST" ENCTYPE="multipart/form-data">
                                 <input class="form-input" type="hidden" name="id" value="<?=$type->getId();?>">
@@ -33,7 +33,7 @@
                                 <input class="form-input" type="file" name="file">
                                 <input class="form-input" name="title" type="text" value="<?=$type->getTitle();?>">
                                 <textarea class="form-input" name="description" rows="5"><?=$type->getDescription();?></textarea>
-                                <button type="submit">Save changes</button>
+                                <button class="btn-submit-margin-top" type="submit">Save changes</button>
                             </form>
                         </div>
                     </div>

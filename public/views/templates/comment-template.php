@@ -27,7 +27,7 @@
         </div>
         <div class="type-details-comment-content-wrapper">
             <div class="type-details-comment-content">
-                <span class="js-comment-message" contenteditable="false"></span>
+                <span class="js-comment-message type-details-comment-message" contenteditable="false"></span>
             </div>
         </div>
     </div>
