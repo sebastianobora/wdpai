@@ -73,7 +73,7 @@ class AppController {
     }
 
     protected function isValidFile(): bool{
-        $isValid = $this->validateFile($_FILES['file']);
+        $isValid = $this->validateFile($_FILES['file']) && $this->isUploadedFile();
         if(!$isValid){
             $this->messages = ["You did not uploaded proper image!"];
         }
