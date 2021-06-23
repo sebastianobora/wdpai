@@ -1,7 +1,7 @@
 <?php
 
 class AppController {
-
+    protected array $messages;
     const MAX_FILE_SIZE = 1024*1024;
     const SUPPORTED_TYPES = ['image/png', "image/jpeg"];
     const UPLOAD_DIRECTORY = '/../public/uploads/';
@@ -10,6 +10,7 @@ class AppController {
 
     public function __construct()
     {
+        $this->messages = [];
         $this->request = $_SERVER['REQUEST_METHOD'];
     }
 
@@ -35,7 +36,8 @@ class AppController {
         print($output);
     }
 
-    protected function prepareFile($file){
+    protected function prepareFile($file): string
+    {
         $fileExtension = explode(".", $file['name']);
         $fileExtension = ".".$fileExtension[sizeof($fileExtension) - 1];
 
@@ -57,13 +59,25 @@ class AppController {
         return true;
     }
 
-    protected function accessToEdit($editedUserId, $currentUser, $admin){
+    protected function accessToEdit($editedUserId, $currentUser, $admin): bool{
         if(($editedUserId == $currentUser->getUserId()) or $admin){
             return true;
         }
         $url = "http://$_SERVER[HTTP_HOST]";
         header("location: {$url}/index");
-        return true;
+        return false;
+    }
+
+    protected function isUploadedFile(): bool{
+        return is_uploaded_file($_FILES['file']['tmp_name']);
+    }
+
+    protected function isValidFile(): bool{
+        $isValid = $this->validateFile($_FILES['file']);
+        if(!$isValid){
+            $this->messages = ["You did not uploaded proper image!"];
+        }
+        return $isValid;
     }
 }
 

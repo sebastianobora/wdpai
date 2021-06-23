@@ -9,7 +9,6 @@ require_once __DIR__.'/../repository/UserDetailsRepository.php';
 require_once __DIR__.'/../repository/CommentRepository.php';
 
 class TypeController extends AppController{
-    private $messages;
     private $typeRepository;
     private $userRepository;
     private $userDetailsRepository;
@@ -20,7 +19,6 @@ class TypeController extends AppController{
     public function __construct()
     {
         parent::__construct();
-        $this->messages = [];
         $this->typeRepository = new TypeRepository();
         $this->userRepository = new UserRepository();
         $this->userDetailsRepository = new UserDetailsRepository();
@@ -71,21 +69,25 @@ class TypeController extends AppController{
         }
     }
 
+    public function isValidType(): bool{
+        $isValid = $_POST['title'] != '' && $_POST['description'] != '';
+        if($isValid){
+            $this->messages = ["Title and description can't be empty!"];
+        }
+        return $isValid;
+    }
+
+    public function isTypeUploadedProperly(): bool{
+        return $this->isPost() && $this->isValidFile() && $this->isValidType();
+    }
+
     public function addType(){
-        if($this->isPost()){
-            if($this->validateFile($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])){
-                if($_POST['title'] != '' && $_POST['description'] != ''){
-                    $file = $this->prepareFile($_FILES['file']);
-                    $type = new Type($_POST['title'], $_POST['description'], $file, $_POST['category']);
-                    $this->typeRepository->addType($type);
-                    $url = "http://$_SERVER[HTTP_HOST]";
-                    header("location: {$url}/types");
-                }else{
-                    $this->messages = ["Title and description can't be empty!"];
-                }
-            }else{
-                $this->messages = ["You can't add type without image!"];
-            }
+        if($this->isTypeUploadedProperly()){
+            $file = $this->prepareFile($_FILES['file']);
+            $type = new Type($_POST['title'], $_POST['description'], $file, $_POST['category']);
+            $this->typeRepository->addType($type);
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("location: {$url}/types");
         }
         $args = ['userDetails' => $this->userDetails, 'categories' => Type::$categories, 'messages' => $this->messages];
         return $this ->render("add-types", $args);
@@ -103,22 +105,32 @@ class TypeController extends AppController{
         }
     }
 
+    public function isEditedTypeValid(): bool{
+        $isValid = $_POST['title'] != '' && $_POST['description'] != '' && $_POST['category'] != '';
+        if(!$isValid){
+            $this->messages = ["All of fields have to be filled!"];
+        }
+        return $isValid;
+    }
+
+    public function updateType($hasAccessToEdit): void{
+        if($hasAccessToEdit && $this->isValidFile() && $this->isEditedTypeValid()) {
+            $file = $this->prepareFile($_FILES['file']);
+            $this->typeRepository->updateTypeField("image", $file, $_POST['id']);
+            $this->typeRepository->updateTypeField("title", $_POST['title'], $_POST['id']);
+            $this->typeRepository->updateTypeField("description", $_POST['description'], $_POST['id']);
+            $this->typeRepository->updateTypeField("category", $_POST['category'], $_POST['id']);
+        }
+    }
+
     public function editType($typeId){
         if($this->isPost()){
             $editedType = $this->typeRepository->getTypeById($_POST['id']);
-            if($this->accessToEdit($editedType->getIdUsers(), $this->currentUser, $this->userRepository->isAdmin())){
-                if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
-                    $file = $this->prepareFile($_FILES['file']);
-                    $this->typeRepository->updateTypeField("image", $file, $_POST['id']);
-                }
-                if($_POST['title'] != '' && $_POST['description'] != '' && $_POST['category'] != ''){
-                    $this->typeRepository->updateTypeField("title", $_POST['title'], $_POST['id']);
-                    $this->typeRepository->updateTypeField("description", $_POST['description'], $_POST['id']);
-                    $this->typeRepository->updateTypeField("category", $_POST['category'], $_POST['id']);
-                }else{
-                    $this->messages = ["All of fields have to be filled!"];
-                }
-            }
+            $hasAccessToEdit = $this->accessToEdit(
+                $editedType->getIdUsers(),
+                $this->currentUser,
+                $this->userRepository->isAdmin());
+            $this->updateType($hasAccessToEdit);
         }
         if($this->isPost() && $typeId == ''){
             $typeId = $_POST['id'];

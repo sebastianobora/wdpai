@@ -5,8 +5,7 @@ require_once __DIR__.'/../models/Comment.php';
 require_once __DIR__.'/../repository/UserRepository.php';
 require_once __DIR__.'/../repository/CommentRepository.php';
 
-class CommentController extends AppController
-{
+class CommentController extends AppController{
     private $userRepository;
     private $commentRepository;
     private $currentUser;
@@ -77,8 +76,7 @@ class CommentController extends AppController
             $decoded = json_decode($content, true);
             $comment = $this->commentRepository->getCommentById($decoded['id']);
 
-            if($this->accessToEdit($comment->getUserId(), $this->currentUser, $this->userRepository->isAdmin()))
-            {
+            if($this->accessToEdit($comment->getUserId(), $this->currentUser, $this->userRepository->isAdmin())) {
                 $this->commentRepository->editCommentById($decoded['message'], $decoded['id']);
             }
             header('Content-Type: application/json');
